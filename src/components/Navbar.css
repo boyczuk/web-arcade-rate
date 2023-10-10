@@ -1,0 +1,44 @@
+.css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
+    background-color: #121212 !important;
+}
+
+/* Adjusting the width of the drawer */
+.MuiDrawer-paper {
+    width: 320px;
+    /* Adjust the width as needed. Increased it slightly here */
+    background-color: #121212;
+    /* Dark background for the entire drawer */
+}
+
+/* Ensure the List also has a dark background */
+.MuiList-root {
+    background-color: #121212;
+    /* Consistent dark background */
+}
+
+/* Neon text effect */
+.MuiListItemText-root {
+    color: #8c52ff;
+    /* Neon purple text */
+    font-weight: bold;
+}
+
+.MuiListItem-root:hover .MuiListItemText-root {
+    color: #e75480;
+    /* Neon pink text on hover */
+}
+
+/* Adjusting ListItem for a better look */
+.MuiListItem-root {
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    border: 2px solid #1e1e2f;
+    /* Border matching the dark background for subtlety */
+}
+
+.MuiListItem-root:hover {
+    background-color: #1e1e2f;
+    /* Neon purple-tinted background on hover */
+    border-color: #8c52ff;
+    /* Neon purple border on hover */
+}

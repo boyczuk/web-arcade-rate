@@ -1,0 +1,25 @@
+.page {
+    background-color: #121212;  /* Dark shade for a neon backdrop */
+    min-height: 100vh;           /* Makes the div take up the full viewport height */
+    padding: 20px;               /* Some spacing around the content */
+    color: #8c52ff;             /* Primary neon purple for text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;        /* Center items horizontally */
+  }
+  
+  h2 {
+    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 20px;        /* Space between header and body */
+  }
+  
+  .body {
+    background-color: #2f2f3f;  /* Slightly lighter than the backdrop for contrast */
+    padding: 20px;
+    border-radius: 8px;         /* Rounded corners for the body container */
+    width: 80%;                 /* Take up 80% of the parent width */
+    max-width: 600px;           /* Don't let the body get too wide */
+    color: #a2a2d0;             /* A subtle lighter color for body text */
+  }
+  
