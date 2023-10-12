@@ -1,3 +1,15 @@
+.add-popup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;;
+    color: #8c52ff;
+}
+
+.popup-content {
+    color: #8c52ff !important;
+}
+
 .css-12i7wg6-MuiPaper-root-MuiDrawer-paper {
     background-color: #121212 !important;
 }
