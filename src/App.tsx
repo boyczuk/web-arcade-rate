@@ -1,5 +1,5 @@
 import Home from './pages/Home';
-import Navbar from './components/Navbar';
+import TopNavbar from './components/TopNavbar';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -8,7 +8,7 @@ import './App.css';
 function App() {
   return (
     <Router>
-      <Navbar />
+      <TopNavbar />
       <div className='content'>
         <Routes>
           <Route path="/" element={<Home />} />

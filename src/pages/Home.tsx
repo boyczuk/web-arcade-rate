@@ -3,11 +3,9 @@ import './Home.css';
 const Home = () => {
     return (
         <div className="page">
-            <h2>Home</h2>
 
             <div className="body">
-                <h2>Letterboxd for video games</h2>
-                <p>Rate and compare your favourite games with friends!</p>
+                <h2>Track and rank your favourite games</h2>
             </div>
         </div>
     )

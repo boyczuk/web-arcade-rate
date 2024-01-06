@@ -1,0 +1,42 @@
+/* General Navbar Styles */
+.Navbar {
+    background-color: transparent !important;
+}
+
+.NavbarContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.NavbarToolbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Logo Styles */
+.LogoContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 10%; /* adjust this value to change the space between logo and menu */
+}
+
+/* Menu Styles */
+.MenuContainer {
+    display: flex;
+    align-items: center;
+}
+
+.MenuLink {
+    margin-left: 20px; /* spacing between menu items */
+    text-decoration: none;
+    color: inherit; /* this makes the link text color same as the parent element */
+}
+
+.MenuLink h2 {
+    margin: 0; /* remove default margin */
+}
+
+.MenuLink:hover {
+    text-decoration: underline; /* add underline on hover for better UX */
+}
