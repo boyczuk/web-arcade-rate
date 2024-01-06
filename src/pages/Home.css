@@ -1,16 +1,13 @@
 .page {
-  background-image: url('../assets/CopyFreeBackground.jpg');
+  background-image: linear-gradient(to bottom, transparent, #07074C),
+    url('../assets/CopyFreeBackground.jpg');
   background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
-
-  min-height: 100vh;
-
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 
 .page::before {
@@ -22,15 +19,19 @@
   bottom: 0;
   background: linear-gradient(to bottom,
       #07074C,
-      /* Dark color at the top */
       rgba(255, 255, 255, 0) 30%,
-      /* Starting to fade to transparent */
       rgba(255, 255, 255, 0) 70%,
-      /* Fully transparent in the middle */
-      #07074C
-      /* Dark color at the bottom */
-    );
+      #07074C);
   z-index: 1;
+}
+
+.color-divider {
+  height: 20px;
+  background: linear-gradient(to right,
+      #25C4F8, #53E8D4, #FFFDBB, #FE39A4, #8921C2, #25C4F8, #53E8D4
+      );
+  width: 95%;
+  margin-left: 2.5%;
 }
 
 .body {
@@ -38,16 +39,30 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  justify-content: center;
   color: white;
   background-color: transparent !important;
-  width: 100%;
+  z-index: 1;
+  margin: 20%;
 }
 
 .body h2 {
   text-align: left;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 20%;
+  margin-right: 20%;
   width: 80%;
+}
+
+/* Make it so that the image doesn't stretch the full page, then set the background colour to whats on the figma */
+.description {
+  color: white;
+  font-weight: bold;
+  text-align: left;
+  font-size: 22px;
+  z-index: 1;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 10%;
 }
 
 .gs_button {

@@ -1,8 +1,7 @@
 .page {
     background-color: #121212;  
     min-height: 100vh;          
-    padding: 20px;   
-    color: #8c52ff;        
+    padding: 20px;        
     display: flex;
     flex-direction: column;
     align-items: center;   

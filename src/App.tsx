@@ -1,5 +1,6 @@
 import Home from './pages/Home';
 import TopNavbar from './components/TopNavbar';
+import Footer from './components/Footer';
 import Search from './pages/Search';
 import Profile from './pages/Profile';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -17,6 +18,7 @@ function App() {
           <Route path="*" element={<Home />} />
         </Routes>
       </div>
+      <Footer />
     </Router>
   );
 }

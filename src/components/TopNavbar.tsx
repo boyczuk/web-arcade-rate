@@ -1,6 +1,7 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
+import Logo from '../assets/CopyFreeBackground.jpg';
 import { NavLink } from 'react-router-dom';
 import './TopNavbar.css';
 
@@ -12,8 +13,8 @@ function TopNavbar() {
                     <div className='LogoContainer'>
                         <NavLink to='/'>
                             <img
-                                //src={Logo}
-                                alt='Logo'
+                                src={Logo}
+                                alt='AR Logo'
                                 width={50}
                                 height={50}
                             />
