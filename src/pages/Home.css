@@ -10,10 +10,51 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom,
+      #07074C,
+      /* Dark color at the top */
+      rgba(255, 255, 255, 0) 30%,
+      /* Starting to fade to transparent */
+      rgba(255, 255, 255, 0) 70%,
+      /* Fully transparent in the middle */
+      #07074C
+      /* Dark color at the bottom */
+    );
+  z-index: 1;
 }
 
 .body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   color: white;
   background-color: transparent !important;
+  width: 100%;
+}
+
+.body h2 {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.gs_button {
+  background-color: #53E8D4 !important;
+  color: #8921C2 !important;
+  font-weight: bold !important;
+  border-radius: 10px !important;
+  align-self: flex-start;
+  margin-left: 10% !important;
 }
