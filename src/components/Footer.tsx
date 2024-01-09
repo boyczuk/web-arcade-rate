@@ -9,7 +9,7 @@ function Footer() {
         <div className='bar'>
             <div className='text'>
                 <h2>@ Adlai.ca</h2>
-                <h2>Video game data from IDGB Database. (Link site)</h2>
+                <h2>Video game data from <a href="#">IDGB Database.</a></h2>
             </div>
 
             <div className='social_media-links'>

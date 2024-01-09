@@ -4,7 +4,8 @@
     align-items: center;
     text-align: center;
     justify-content: center;
-    width: 100%;
+    width: 95%;
+    padding: 15px;
 }
 
 .bar h2 {
@@ -25,5 +26,5 @@
 .social_media-links .MuiSvgIcon-root { /* Target Material-UI icons */
     color: white;
     cursor: pointer; /* Changes cursor to pointer on hover */
-    font-size: 86px;
+    font-size: 80px;
 }
