@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from './firebase'; // Ensure you have the correct path to your firebase config file
+import { auth } from './firebase';
 
 import Home from './pages/Home';
-import TopNavbar from './components/TopNavbar';
+import TopNavbarLoggedIn from './components/TopNavbarLoggedIn';
+import TopNavbarLoggedOut from './components/TopNavbarLoggedOut';
 import Footer from './components/Footer';
 import Search from './pages/Search';
 import Login from './pages/User/Login';
@@ -26,7 +27,7 @@ function App() {
 
   return (
     <Router>
-      <TopNavbar />
+      {currentUser ? <TopNavbarLoggedIn /> : <TopNavbarLoggedOut />}
       <div className='content'>
         <Routes>
           <Route path="/" element={<Home />} />

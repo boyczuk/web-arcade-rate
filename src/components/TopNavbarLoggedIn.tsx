@@ -1,11 +1,24 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
+import AuthService from '../authService';
 import Logo from '../assets/CopyFreeBackground.jpg';
-import { NavLink } from 'react-router-dom';
-import './TopNavbar.css';
+import { NavLink, useNavigate } from 'react-router-dom';
+import './TopNavbarLoggedIn.css';
 
-function TopNavbar() {
+function TopNavbarLoggedIn() {
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await AuthService.signOut();
+            navigate('/profile');
+        } catch (error) {
+            console.error("error logging out", error);
+        }
+
+    }
+
     return (
         <AppBar className='Navbar'>
             <Container className='NavbarContainer'>
@@ -25,9 +38,12 @@ function TopNavbar() {
                             <h2>Games</h2>
                         </NavLink>
 
-                        <NavLink to='/Login' className='MenuLink'>
-                            <h2>Log in</h2>
+                        {/* Make dropdown menu */}
+                        <NavLink to='/Profile' className='MenuLink'>
+                            <h2>Profile</h2>
                         </NavLink>
+
+                        <button onClick={handleLogout}>Logout</button>
                     </div>
                 </Toolbar>
             </Container>
@@ -36,4 +52,4 @@ function TopNavbar() {
 }
 
 
-export default TopNavbar;
+export default TopNavbarLoggedIn;
