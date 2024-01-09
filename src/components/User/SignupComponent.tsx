@@ -28,6 +28,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchMode }) => {
         if (password !== verifyPassword) {
             setSignupFailed(true);
             console.error(("Passwords don't match"));
+            setPasswordMismatch(true);
             return;
         }
 
