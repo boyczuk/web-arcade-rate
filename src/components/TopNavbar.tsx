@@ -12,12 +12,7 @@ function TopNavbar() {
                 <Toolbar className='NavbarToolbar'>
                     <div className='LogoContainer'>
                         <NavLink to='/'>
-                            <img
-                                src={Logo}
-                                alt='AR Logo'
-                                width={50}
-                                height={50}
-                            />
+                            <p>AR</p>
                         </NavLink>
                     </div>
 
@@ -26,11 +21,11 @@ function TopNavbar() {
                             <h2>Home</h2>
                         </NavLink>
 
-                        <NavLink to='/games' className='MenuLink'>
+                        <NavLink to='/Search' className='MenuLink'>
                             <h2>Games</h2>
                         </NavLink>
 
-                        <NavLink to='/log-in' className='MenuLink'>
+                        <NavLink to='/Login' className='MenuLink'>
                             <h2>Log in</h2>
                         </NavLink>
                     </div>

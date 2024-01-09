@@ -17,7 +17,8 @@
 .LogoContainer {
     display: flex;
     align-items: center;
-    margin-right: 10%; 
+    margin-right: 10%;
+    text-decoration: none;
 }
 
 .MenuContainer {
