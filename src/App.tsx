@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import TopNavbarLoggedIn from './components/TopNavbarLoggedIn';
 import TopNavbarLoggedOut from './components/TopNavbarLoggedOut';
 import Footer from './components/Footer';
-import Search from './pages/Search';
+import GameSearch from './pages/GameSearch';
 import Login from './pages/User/Login';
 import Profile from './pages/User/Profile';
 import './App.css';
@@ -31,7 +31,7 @@ function App() {
       <div className='content'>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/search" element={<GameSearch />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<Home />} />

@@ -8,7 +8,7 @@ const Home = () => {
 
                 <div className="body">
                     <h2>Track and rank <br></br>your favourite games</h2>
-                    <Button className="gs_button" variant="contained">GET STARTED</Button>
+                    <Button className="gs_button" variant="contained" href="/Login">GET STARTED</Button>
                 </div>
             </div>
             <div className='color-divider'></div>
