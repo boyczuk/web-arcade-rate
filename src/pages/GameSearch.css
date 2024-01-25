@@ -1,64 +1,59 @@
-.page {
-  background-color: #121212;
-  min-height: 100vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-h2 {
-  font-weight: bold;
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-.body {
-  background-color: #2f2f3f;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
-  color: white;
-}
-
-/* This will style the container of the GameSearch component */
+/* GameSearch.css */
 .game-search-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  margin-top: 70px;
-  /* Full height of the viewport */
+  /* Add enough top margin or padding to push the content below the navbar */
+  margin-top: 80px; /* Adjust this value as needed to clear your navbar */
   padding: 20px;
-  /* Add some padding */
-  box-sizing: border-box;
-  /* Include padding in the height calculation */
+  box-sizing: border-box; /* Ensures padding is included in width calculations */
 }
 
-/* Styles for the game results */
+.search-input {
+  width: 100%; /* Full width */
+  padding: 15px 20px; /* Larger padding for bigger height */
+  font-size: 1.25em; /* Larger font size for better visibility */
+  margin-bottom: 20px; /* Space below the search bar */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  border-radius: 5px; /* Optional: rounded corners */
+  border: 1px solid #ddd; /* Optional: border style */
+}
+
 .game-results {
-  margin-top: 20px;
-  /* Space between search bar and results */
-  width: 100%;
-  /* Adjust width as needed */
-  max-width: 600px;
-  /* Max width of the results */
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column; /* Stack results vertically */
+  gap: 20px; /* Space between game items */
 }
 
-/* Styles for each game result */
-.game-results div {
-  margin-bottom: 10px;
-  /* Space between each game result */
-  padding: 10px;
-  border: 1px solid #ccc;
-  /* Border for each game result */
-  border-radius: 5px;
-  width: 100%;
+.game-item {
+  display: flex;
+  align-items: center; /* Align image and title vertically */
+  gap: 15px; /* Space between image and title */
 }
 
-/* Additional styling as needed... */
+.game-image {
+  width: 100px; /* Smaller width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.game-info {
+  flex-grow: 1; /* Allow the title to take up remaining space */
+  display: flex;
+  flex-direction: column; /* Stack info vertically */
+  justify-content: center; /* Center info vertically */
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .game-results {
+      flex-direction: row; /* Display results in a row for larger screens */
+      flex-wrap: wrap; /* Allow wrapping */
+  }
+
+  .game-item {
+      width: calc(50% - 10px); /* Half width minus gap */
+  }
+}
+
+@media (min-width: 1024px) {
+  .game-item {
+      width: calc(33.333% - 15px); /* One third width minus gap for larger screens */
+  }
+}

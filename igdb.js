@@ -9,7 +9,7 @@ async function searchGames(token, query) {
             'Client-ID': process.env.IGDB_CLIENT_ID,
             'Authorization': `Bearer ${token}`
         },
-        data: `fields name,genres,platforms; search "${query}";`
+        data: `fields name,genres,platforms,cover.*; search "${query}";`
     });
     return response.data;
 }
