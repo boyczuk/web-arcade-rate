@@ -1,25 +1,45 @@
-/* GameSearch.css */
 .game-search-container {
-  /* Add enough top margin or padding to push the content below the navbar */
-  margin-top: 80px; /* Adjust this value as needed to clear your navbar */
+  margin-top: 15%; /* Adjust this value as needed */
   padding: 20px;
-  box-sizing: border-box; /* Ensures padding is included in width calculations */
+  box-sizing: border-box;
+}
+
+.search-bar-container {
+  display: flex;
+  gap: 10px; /* Adds a gap between input and button */
+  margin-bottom: 20px; /* Space below the search bar */
 }
 
 .search-input {
-  width: 100%; /* Full width */
-  padding: 15px 20px; /* Larger padding for bigger height */
-  font-size: 1.25em; /* Larger font size for better visibility */
-  margin-bottom: 20px; /* Space below the search bar */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  border-radius: 5px; /* Optional: rounded corners */
-  border: 1px solid #ddd; /* Optional: border style */
+  flex-grow: 1;
+  padding: 15px 20px;
+  font-size: 1.25em;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.search-button {
+  padding: 15px 20px;
+  font-size: 1.25em;
+  border-radius: 5px;
+  border: none;
+  background-color: #5c6bc0; /* Example color, match this to your design */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  outline: none; /* Remove focus outline */
+}
+
+.search-button:hover {
+  background-color: #3949ab; /* Darker shade when hovered */
 }
 
 .game-results {
   display: flex;
   flex-direction: column; /* Stack results vertically */
   gap: 20px; /* Space between game items */
+  color: white;
 }
 
 .game-item {

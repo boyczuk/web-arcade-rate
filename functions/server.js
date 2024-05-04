@@ -1,12 +1,12 @@
+const functions = require('firebase-functions');
 const express = require('express');
 const cors = require('cors');
 const { getAccessToken } = require('./auth'); // Import the function from auth.js
 const { searchGames } = require('./igdb'); // Import the function from igdb.js
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: true })); // Adjust for Firebase Functions
 app.use(express.json());
 
 app.get('/search-games', async (req, res) => {
@@ -20,6 +20,4 @@ app.get('/search-games', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+exports.api = functions.https.onRequest(app);

@@ -13,12 +13,13 @@ const Home = () => {
             </div>
             <div className='color-divider'></div>
             <div className='description'>
-                <h1>Header</h1>
+                <h1>Ranking video games</h1>
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    Throughout my life video games have always been incredibly impactful, and although a number rating 
+                    out of 5 doesn't do it any justice, I've always wanted to keep a record of which games impacted me the most. 
+                    Arcade-rate is designed to make it easy to track your own favourites and compare them with your friends. I figured 
+                    this would be a great opportunity to learn how to work with firebase as well as opening avenues for a building a 
+                    recommendation system in the future.
                 </p>
             </div>
             <div className='color-divider'></div>
