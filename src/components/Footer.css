@@ -10,7 +10,7 @@
 
 .bar h2 {
     margin: 0;
-    padding: 5px 0; /* Add some padding for spacing, adjust as needed */
+    padding: 5px 0;
     flex-grow: 1;
     color: white;
     text-align: left;
@@ -18,13 +18,13 @@
 
 .social_media-links {
     display: flex;
-    gap: 20px; /* Adjust the space between icons */
+    gap: 20px;  
     flex-direction: row;
     margin-left: 15%;
 }
 
-.social_media-links .MuiSvgIcon-root { /* Target Material-UI icons */
+.social_media-links .MuiSvgIcon-root { 
     color: white;
-    cursor: pointer; /* Changes cursor to pointer on hover */
+    cursor: pointer;  
     font-size: 80px;
 }

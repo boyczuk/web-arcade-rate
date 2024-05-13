@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import GameSearch from './pages/GameSearch';
 import Login from './pages/User/Login';
 import Profile from './pages/User/Profile';
+import Settings from './pages/User/Settings';
 import './App.css';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/search" element={<GameSearch />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/settings" element={<Settings />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </div>

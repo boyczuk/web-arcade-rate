@@ -1,13 +1,11 @@
-/* GameSearch.css */
 .game-search-container {
-  /* Add enough top margin or padding to push the content below the navbar */
-  margin-top: 80px; /* Adjust this value as needed to clear your navbar */
+  margin-top: 80px; 
   padding: 20px;
-  box-sizing: border-box; /* Ensures padding is included in width calculations */
+  box-sizing: border-box;
 }
 
 .search-input {
-  width: 50%; /* Full width */
+  width: 50%;
   font-size: 1.25em;
   padding: 15px 20px;
   margin-bottom: 20px;
@@ -35,42 +33,47 @@
 
 .game-results {
   display: flex;
-  flex-direction: column; /* Stack results vertically */
-  gap: 20px; /* Space between game items */
+  flex-direction: column; 
+  gap: 20px; 
 }
 
 .game-item {
   display: flex;
-  align-items: center; /* Align image and title vertically */
-  gap: 15px; /* Space between image and title */
+  color: white;
+  gap: 15px;
+  border: 1px solid white; 
+  padding: 10px; 
+  margin-bottom: 20px; 
+  background-color: #1a1a1a; 
+  width: 100%; 
+  box-sizing: border-box;
 }
 
 .game-image {
-  width: 100px; /* Smaller width */
-  height: auto; /* Maintain aspect ratio */
+  width: 100px; 
+  height: auto; 
 }
 
 .game-info {
-  flex-grow: 1; /* Allow the title to take up remaining space */
+  flex-grow: 1; 
   display: flex;
-  flex-direction: column; /* Stack info vertically */
-  justify-content: center; /* Center info vertically */
+  flex-direction: column; 
+  justify-content: center; 
 }
 
-/* Responsive adjustments */
 @media (min-width: 768px) {
   .game-results {
-      flex-direction: row; /* Display results in a row for larger screens */
-      flex-wrap: wrap; /* Allow wrapping */
+      flex-direction: row; 
+      flex-wrap: wrap; 
   }
 
   .game-item {
-      width: calc(50% - 10px); /* Half width minus gap */
+      width: calc(50% - 10px); 
   }
 }
 
 @media (min-width: 1024px) {
   .game-item {
-      width: calc(33.333% - 15px); /* One third width minus gap for larger screens */
+      width: calc(33.333% - 15px); 
   }
 }

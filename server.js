@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const { getAccessToken } = require('./auth'); // Import the function from auth.js
-const { searchGames } = require('./igdb'); // Import the function from igdb.js
+const { getAccessToken } = require('./auth');
+const { searchGames } = require('./igdb'); 
 
 const app = express();
 const PORT = process.env.PORT || 3001;

@@ -28,8 +28,7 @@
 .color-divider {
   height: 20px;
   background: linear-gradient(to right,
-      #25C4F8, #53E8D4, #FFFDBB, #FE39A4, #8921C2, #25C4F8, #53E8D4
-      );
+      #25C4F8, #53E8D4, #FFFDBB, #FE39A4, #8921C2, #25C4F8, #53E8D4);
   width: 95%;
   margin-left: 2.5%;
 }

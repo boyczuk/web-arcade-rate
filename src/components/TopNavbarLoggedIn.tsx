@@ -4,10 +4,12 @@ import Container from '@mui/material/Container';
 import AuthService from '../authService';
 import Logo from '../assets/CopyFreeBackground.jpg';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import './TopNavbarLoggedIn.css';
 
 function TopNavbarLoggedIn() {
     const navigate = useNavigate();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const handleLogout = async () => {
         try {
@@ -40,11 +42,23 @@ function TopNavbarLoggedIn() {
                         </NavLink>
 
                         {/* Make dropdown menu */}
-                        <NavLink to='/Profile' className='MenuLink'>
-                            <h2>Profile</h2>
-                        </NavLink>
+                        <div
+                            className='MenuLink ProfileLink'
+                            onMouseEnter={() => setDropdownOpen(true)}
+                            onMouseLeave={() => setDropdownOpen(false)}>
+                            <NavLink to='/Profile' className='MenuLink'>
+                                <h2>Profile <span>▼</span></h2>
+                            </NavLink>
+                            {dropdownOpen && (
+                                <div className='DropdownMenu'>
+                                    <NavLink to='/profile/settings' className='MenuLink'>Settings</NavLink>
+                                </div>
+                            )}
+                        </div>
 
-                        <button onClick={handleLogout}>Logout</button>
+
+
+                        <button className='logout' onClick={handleLogout}>Logout</button>
                     </div>
                 </Toolbar>
             </Container>

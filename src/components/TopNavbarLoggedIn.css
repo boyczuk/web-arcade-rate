@@ -34,6 +34,14 @@
     font-weight: bold;
 }
 
+.logout {
+    text-decoration: none !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 30px;
+    background-color: transparent
+}
+
 .MenuContainer {
     display: flex;
     align-items: center;
@@ -52,4 +60,45 @@
 
 .MenuLink:hover {
     text-decoration: underline; 
+}
+
+.ProfileLink {
+    position: relative;
+    display: inline-block;
+}
+
+.ProfileLink h2 {
+    cursor: pointer;
+    color: white; 
+}
+
+.ProfileLink h2 span {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.DropdownMenu {
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.529); 
+    z-index: 100;
+    width: 100%; 
+}
+
+.DropdownMenu .DropdownItem {
+    display: block; 
+    padding: 10px; 
+    color: black; 
+    text-decoration: none; 
+    width: 100%; 
+    border-bottom: 1px solid #ccc; 
+}
+
+.DropdownMenu .DropdownItem:last-child {
+    border-bottom: none; 
+}
+
+.DropdownMenu .DropdownItem:hover {
+    background-color: #f0f0f0; 
 }
