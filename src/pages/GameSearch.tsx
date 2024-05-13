@@ -34,6 +34,11 @@ const GameSearch = () => {
                 placeholder="Search for games..."
                 className="search-input"
             />
+            <button
+                
+                onClick={() => handleSearch(searchTerm)}
+                className='search-button'
+            >Search</button>
             <div className="game-results">
                 {games.map((game, index) => (
                     <div key={index} className="game-item">

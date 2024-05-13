@@ -25,7 +25,8 @@ function TopNavbarLoggedIn() {
                 <Toolbar className='NavbarToolbar'>
                     <div className='LogoContainer'>
                         <NavLink to='/'>
-                            <p>AR</p>
+                            <div className='logo'><p>Arcade-Rate</p></div>
+
                         </NavLink>
                     </div>
 

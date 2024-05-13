@@ -18,7 +18,20 @@
     display: flex;
     align-items: center;
     margin-right: 10%;
+    text-decoration: none !important;
+}
+
+.logo {
+    text-decoration: none !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 30px;
+}
+
+.logo a, .logo a:visited, .logo a:hover, .logo a:active {
     text-decoration: none;
+    color: white;
+    font-weight: bold;
 }
 
 .MenuContainer {

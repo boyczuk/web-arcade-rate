@@ -12,7 +12,7 @@ function TopNavbar() {
                 <Toolbar className='NavbarToolbar'>
                     <div className='LogoContainer'>
                         <NavLink to='/'>
-                            <p>AR</p>
+                            <div className='logo'><p>Arcade-Rate</p></div>
                         </NavLink>
                     </div>
 
@@ -21,7 +21,7 @@ function TopNavbar() {
                             <h2>Home</h2>
                         </NavLink>
 
-                        <NavLink to='/Search' className='MenuLink'>
+                        <NavLink to='/Login' className='MenuLink'>
                             <h2>Games</h2>
                         </NavLink>
 
