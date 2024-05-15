@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import SearchBar from '../components/Utilities/SearchBar';
 import searchGames from '../components/Utilities/searchGames';
 import { Game } from '../components/Types/Game';
+import IconButton from '@mui/material/IconButton';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import './GameSearch.css'
 
 const GameSearch = () => {
     const [games, setGames] = useState<Game[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [addedGames, setAddedGames] = useState<number[]>([]);
 
     const handleSearch = (searchTerm: string) => {
         if (searchTerm) {
@@ -24,6 +28,11 @@ const GameSearch = () => {
         }
     };
 
+    const handleAddGame = (gameId: number, game: String) => {
+        console.log(`Game added: ${game}`)
+        setAddedGames([...addedGames, gameId]);
+    };
+
     return (
         <div className="game-search-container">
             <input
@@ -35,7 +44,7 @@ const GameSearch = () => {
                 className="search-input"
             />
             <button
-                
+
                 onClick={() => handleSearch(searchTerm)}
                 className='search-button'
             >Search</button>
@@ -49,6 +58,15 @@ const GameSearch = () => {
                         />
                         <div className="game-info">
                             <h3>{game.name}</h3>
+                            <IconButton
+                                className='addGameButton'
+                                color="primary"
+                                aria-label="add to profile"
+                                onClick={() => handleAddGame(game.id, game.name)}
+                            >
+                                {/*Change tile colour*/}
+                                {addedGames.includes(game.id) ? <CheckCircleIcon /> : <AddCircleOutlineIcon />}
+                            </IconButton>
                             {/* Display other game details here */}
                         </div>
                     </div>

@@ -18,10 +18,10 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(to bottom,
-      #07074C,
+      #151522,
       rgba(255, 255, 255, 0) 30%,
       rgba(255, 255, 255, 0) 70%,
-      #07074C);
+      #151522);
   z-index: 1;
 }
 
