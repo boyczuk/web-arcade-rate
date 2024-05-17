@@ -1,5 +1,6 @@
 // Modal.tsx
 import React, { useState, FormEvent } from 'react';
+import './Modal.css';
 
 interface ModalProps {
   isOpen: boolean;
@@ -21,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, initialData })
     if (!isOpen) return null;
 
     return (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={onClose}>
+        <div className='modal-text' style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)' }} onClick={onClose}>
             <div style={{ maxWidth: '500px', margin: '100px auto', backgroundColor: '#fff', padding: '20px', position: 'relative' }} onClick={(e) => e.stopPropagation()}>
                 <button onClick={onClose} style={{ position: 'absolute', top: '10px', right: '10px' }}>Close</button>
                 <form onSubmit={handleSubmit}>
