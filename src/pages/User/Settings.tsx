@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Profile.css';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
+import changeImage from '../../components/Utilities/changeImage';
+import Modal from '../../components/Utilities/Modal';
 import './Settings.css'
 
 interface UserData {
@@ -27,6 +29,7 @@ async function fetchUserData(): Promise<UserData | undefined> {
 
 const Profile = () => {
     const [userData, setUserData] = useState<UserData | undefined>();
+    const [isModalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,6 +42,22 @@ const Profile = () => {
         fetchData();
     }, []);
 
+    const handleUpdateUser = async (data: { username?: string, name?: string }) => {
+        if (!auth.currentUser) {
+            console.error('No user logged in');
+            return;
+        }
+        const userRef = doc(db, 'users', auth.currentUser.uid);
+        try {
+            await updateDoc(userRef, { ...data });
+            setUserData(prev => ({ ...prev!, ...data }));
+            alert('User updated successfully!');
+        } catch (error) {
+            console.error('Error updating user:', error);
+            alert('Failed to update user.');
+        }
+    };
+
     if (!userData) {
         return <div>Loading...</div>;
     }
@@ -49,8 +68,16 @@ const Profile = () => {
             <div className="image-placeholder">Image Placeholder</div>
             <div className="content">
                 <p>Username: {userData.username}</p>
+                <button onClick={() => setModalOpen(true)}>Change Username</button>
                 <p>Name: {userData.name}</p>
+                <button onClick={() => setModalOpen(true)}>Change Name</button>
             </div>
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setModalOpen(false)}
+                onSubmit={handleUpdateUser}
+                initialData={userData}
+            />
         </div>
     );
 };
