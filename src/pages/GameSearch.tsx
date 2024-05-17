@@ -9,7 +9,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import './GameSearch.css';
-import axios from 'axios';
 
 interface UserData {
     userId: string;
@@ -73,20 +72,6 @@ const GameSearch = () => {
             console.error('User data not available. Cannot add game.');
         }
 
-
-        {/*try {
-            console.log(userData?.username);
-            console.log(gameId);
-            const response = await axios.post('http://localhost:3001/add-game', {
-                userId: userData?.username,
-                gameId,
-                game
-            });
-            console.log(response.data);
-            console.log(`Game added: ${game}`);
-        } catch (error) {
-            console.error('Error adding game', error);
-        }*/}
     };
 
     return (

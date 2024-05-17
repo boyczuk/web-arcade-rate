@@ -6,8 +6,11 @@ const { searchGames } = require('./igdb');
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const path = require('path');
+const axios = require('axios');
 
 const serviceAccount = require(path.join(__dirname, 'serviceAccountKey.json'));
+
+const CLIENT_ID = process.env.IGDB_CLIENT_ID;
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -18,6 +21,23 @@ const db = admin.firestore()
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+async function fetchGameById(accessToken, gameId) {
+    try {
+        const url = `https://api.igdb.com/v4/games`;  // IGDB endpoint for games
+        const response = await axios.post(url, `fields name, cover.url; where id = ${gameId};`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Client-ID': CLIENT_ID,  // Your IGDB client ID
+                'Accept': 'application/json'
+            }
+        });
+        return response.data;  // Assuming the API returns the game details in response.data
+    } catch (error) {
+        console.error('Error fetching game from IGDB:', error);
+        throw error;
+    }
+}
 
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
@@ -30,6 +50,19 @@ app.get('/search-games', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send(`Error fetching data from IGDB: ${error.message}`);
+    }
+});
+
+
+app.get('/fetch-game-by-id', async (req, res) => {
+    try {
+        const token = await getAccessToken();
+        const gameId = req.query.id;
+        const data = await fetchGameById(token, gameId);
+        res.json(data);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(`Error fetching game data from IGDB: ${error.message}`);
     }
 });
 
