@@ -25,3 +25,4 @@ src/firebase.ts
 
 .env
 arcade-rate-firebase-adminsdk-ypisf-3bc67256ff.json
+serviceAccountKey.json

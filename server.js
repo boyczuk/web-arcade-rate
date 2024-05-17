@@ -5,8 +5,9 @@ const { searchGames } = require('./igdb');
 
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
+const path = require('path');
 
-const serviceAccount = require(path.join(__dirname, 'config/serviceAccountKey.json'));
+const serviceAccount = require(path.join(__dirname, 'serviceAccountKey.json'));
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -53,13 +54,13 @@ app.post('/add-game', async (req, res) => {
         if (!updatedGames.includes(gameId)) {
             updatedGames.push(gameId);
             await userRef.update({ games: updatedGames.join(',') });
-            return res.status(200).send("Game added successfully");
+            res.status(200).json({ message: "Game added successfully" });
         } else {
             return res.status(400).send("Game already exists");
         }
     } catch (error) {
         console.error('Error updating user profile:', erorr);
-        return res.status(500).send('Internal server error.');
+        res.status(500).json({ message: 'Internal server error.' });
     }
 });
 

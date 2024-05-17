@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Profile.css';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
 import './Profile.css'
