@@ -1,6 +1,6 @@
 import React, { useState, FormEvent, ChangeEvent } from 'react';
 import { getStorage, ref as firebaseStorageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { auth } from '../../firebase'; // Ensure these imports are correct
+import { auth } from '../../firebase';
 
 interface ModalProps {
     isOpen: boolean;
