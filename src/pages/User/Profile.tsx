@@ -8,6 +8,7 @@ interface UserData {
     username: string;
     name: string;
     games: number[];
+    photoURL?: string;
     // Add other user properties as needed
 }
 
@@ -22,7 +23,8 @@ async function fetchUserData(): Promise<UserData | undefined> {
             return {
                 username: data.username,
                 name: data.name,
-                games: gamesArray
+                games: gamesArray,
+                photoURL: data.photoURL
             } as UserData;
         } else {
             console.log("No such document!");
@@ -85,7 +87,13 @@ const Profile = () => {
 
     return (
         <div className="profile-container">
-            <div className="image-placeholder">Image Placeholder</div>
+            <div className="image-container">
+                {userData.photoURL ? (
+                    <img src={userData.photoURL} alt="Profile" style={{ width: '100px', height: '100px' }} />
+                ) : (
+                    <div className="image-placeholder">Image Placeholder</div>
+                )}
+            </div>
             <div className="content">
                 <h1>User Profile</h1>
                 <p>Username: {userData.username}</p>

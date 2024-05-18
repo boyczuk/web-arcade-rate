@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
-import changeImage from '../../components/Utilities/changeImage';
 import Modal from '../../components/Utilities/Modal';
 import './Settings.css'
 
@@ -10,7 +9,7 @@ interface UserData {
     username: string;
     name: string;
     email: string;
-    photoURL?: string;  // Optional because it might not be set initially
+    photoURL?: string;  
 }
 
 
@@ -76,11 +75,9 @@ const Profile = () => {
             </div>
             <div className="content">
                 <p>Username: {userData.username}</p>
-                <button onClick={() => setModalOpen(true)}>Change Username</button>
                 <p>Name: {userData.name}</p>
-                <button onClick={() => setModalOpen(true)}>Change Name</button>
                 <p>Email: {userData.email}</p>
-                <button onClick={() => setModalOpen(true)}>Change Email</button>
+                <button onClick={() => setModalOpen(true)}>Modify</button>
             </div>
             <Modal
                 isOpen={isModalOpen}
