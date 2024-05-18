@@ -9,8 +9,10 @@ import './Settings.css'
 interface UserData {
     username: string;
     name: string;
-    // Add other user properties as needed
+    email: string;
+    photoURL?: string;  // Optional because it might not be set initially
 }
+
 
 async function fetchUserData(): Promise<UserData | undefined> {
     const user = auth.currentUser;
@@ -42,7 +44,7 @@ const Profile = () => {
         fetchData();
     }, []);
 
-    const handleUpdateUser = async (data: { username?: string, name?: string }) => {
+    const handleUpdateUser = async (data: { username?: string, name?: string, email?: string, photoURL?: string }) => {
         if (!auth.currentUser) {
             console.error('No user logged in');
             return;
@@ -65,12 +67,20 @@ const Profile = () => {
     return (
         <div className="profile-container">
             <h1>Settings</h1>
-            <div className="image-placeholder">Image Placeholder</div>
+            <div className="image-container">
+                {userData.photoURL ? (
+                    <img src={userData.photoURL} alt="Profile" style={{ width: '100px', height: '100px' }} />
+                ) : (
+                    <div className="image-placeholder">Image Placeholder</div>
+                )}
+            </div>
             <div className="content">
                 <p>Username: {userData.username}</p>
                 <button onClick={() => setModalOpen(true)}>Change Username</button>
                 <p>Name: {userData.name}</p>
                 <button onClick={() => setModalOpen(true)}>Change Name</button>
+                <p>Email: {userData.email}</p>
+                <button onClick={() => setModalOpen(true)}>Change Email</button>
             </div>
             <Modal
                 isOpen={isModalOpen}

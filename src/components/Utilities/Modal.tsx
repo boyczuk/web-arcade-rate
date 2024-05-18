@@ -1,21 +1,38 @@
-// Modal.tsx
-import React, { useState, FormEvent } from 'react';
-import './Modal.css';
+import React, { useState, FormEvent, ChangeEvent } from 'react';
+import { getStorage, ref as firebaseStorageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { auth } from '../../firebase'; // Ensure these imports are correct
 
 interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSubmit: (data: { username?: string, name?: string }) => void;
-  initialData: { username: string, name: string };
+    isOpen: boolean;
+    onClose: () => void;
+    onSubmit: (data: { username?: string, name?: string, email?: string, photoURL?: string }) => void;
+    initialData: { username: string, name: string, email: string, photoURL?: string };
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, initialData }) => {
     const [username, setUsername] = useState(initialData.username);
     const [name, setName] = useState(initialData.name);
+    const [email, setEmail] = useState(initialData.email);
+    const [file, setFile] = useState<File | null>(null);
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setFile(e.target.files[0]);
+        }
+    };
+
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        onSubmit({ username, name });
+        let photoURL = initialData.photoURL;
+
+        if (file && auth.currentUser) {
+            const storage = getStorage();
+            const userStorageRef = firebaseStorageRef(storage, `profileImages/${auth.currentUser.uid}/${file.name}`);
+            const snapshot = await uploadBytes(userStorageRef, file);
+            photoURL = await getDownloadURL(snapshot.ref);
+        }
+
+        onSubmit({ username, name, email, photoURL });
         onClose(); // Close the modal after submission
     };
 
@@ -33,6 +50,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, initialData })
                     <div>
                         <label>Name:</label>
                         <input type="text" value={name} onChange={e => setName(e.target.value)} />
+                    </div>
+                    <div>
+                        <label>Email:</label>
+                        <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+                    </div>
+                    <div>
+                        <label>Profile Picture:</label>
+                        <input type="file" onChange={handleFileChange} accept="image/*" />
                     </div>
                     <button type="submit">Update</button>
                 </form>
