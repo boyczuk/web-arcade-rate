@@ -1,15 +1,13 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import AuthService from '../authService';
-import Logo from '../assets/CopyFreeBackground.jpg';
+import React, { useState, FormEvent, ChangeEvent } from 'react';
+import { AppBar, Toolbar, Container } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import AuthService from '../authService';
 import './TopNavbarLoggedIn.css';
 
 function TopNavbarLoggedIn() {
     const navigate = useNavigate();
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleLogout = async () => {
         try {
@@ -18,8 +16,18 @@ function TopNavbarLoggedIn() {
         } catch (error) {
             console.error("error logging out", error);
         }
+    };
 
-    }
+    const handleSearchSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (searchTerm.trim()) {
+            navigate(`/searchuser?query=${encodeURIComponent(searchTerm.trim())}`);
+        }
+    };
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+    };
 
     return (
         <AppBar className='Navbar'>
@@ -28,20 +36,28 @@ function TopNavbarLoggedIn() {
                     <div className='LogoContainer'>
                         <NavLink to='/'>
                             <div className='logo'><p>Arcade-Rate</p></div>
-
                         </NavLink>
                     </div>
+
+                    <form onSubmit={handleSearchSubmit} style={{ display: 'flex', alignItems: 'center' }}>
+                        <input
+                            type="text"
+                            placeholder="Search users..."
+                            value={searchTerm}
+                            onChange={handleInputChange}
+                            style={{ marginRight: '10px' }}
+                        />
+                        <button type="submit">Search</button>
+                    </form>
 
                     <div className='MenuContainer'>
                         <NavLink to='/' className='MenuLink'>
                             <h2>Home</h2>
                         </NavLink>
-
                         <NavLink to='/Search' className='MenuLink'>
                             <h2>Games</h2>
                         </NavLink>
 
-                        {/* Make dropdown menu */}
                         <div
                             className='MenuLink ProfileLink'
                             onMouseEnter={() => setDropdownOpen(true)}
@@ -56,8 +72,6 @@ function TopNavbarLoggedIn() {
                             )}
                         </div>
 
-
-
                         <button className='logout' onClick={handleLogout}>Logout</button>
                     </div>
                 </Toolbar>
@@ -65,6 +79,5 @@ function TopNavbarLoggedIn() {
         </AppBar>
     );
 }
-
 
 export default TopNavbarLoggedIn;

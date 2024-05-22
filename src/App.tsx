@@ -12,6 +12,7 @@ import Login from './pages/User/Login';
 import Profile from './pages/User/Profile';
 import Settings from './pages/User/Settings';
 import './App.css';
+import SearchResultsPage from './pages/SearchResultsPage';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -36,6 +37,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/settings" element={<Settings />} />
+          <Route path="/searchuser" element={<SearchResultsPage />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </div>
