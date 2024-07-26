@@ -41,13 +41,13 @@ function TopNavbarLoggedIn() {
 
                     <form onSubmit={handleSearchSubmit} style={{ display: 'flex', alignItems: 'center' }}>
                         <input
+                            className="search-input"
                             type="text"
                             placeholder="Search users..."
                             value={searchTerm}
                             onChange={handleInputChange}
-                            style={{ marginRight: '10px' }}
                         />
-                        <button type="submit">Search</button>
+                        <button className="search-button" type="submit">Search</button>
                     </form>
 
                     <div className='MenuContainer'>

@@ -11,7 +11,11 @@ interface FirestoreUser {
 
 const searchUsers = async (searchTerm: string): Promise<FirestoreUser[]> => {
     const usersRef = collection(db, "users");
-    const q = query(usersRef, where("username", "==", searchTerm));
+    // Use range query to find users whose usernames start with the searchTerm
+    const q = query(usersRef, 
+        where("username", ">=", searchTerm),
+        where("username", "<=", searchTerm + '\uf8ff')
+    );
     const querySnapshot = await getDocs(q);
     const users: FirestoreUser[] = [];
     querySnapshot.forEach((doc) => {

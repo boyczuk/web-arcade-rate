@@ -8,6 +8,7 @@ import TopNavbarLoggedIn from './components/TopNavbarLoggedIn';
 import TopNavbarLoggedOut from './components/TopNavbarLoggedOut';
 import Footer from './components/Footer';
 import GameSearch from './pages/GameSearch';
+import UserProfile from './pages/User/UserProfile';
 import Login from './pages/User/Login';
 import Profile from './pages/User/Profile';
 import Settings from './pages/User/Settings';
@@ -38,6 +39,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/settings" element={<Settings />} />
           <Route path="/searchuser" element={<SearchResultsPage />} />
+          <Route path="/profile/:userId" element={<UserProfile />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </div>
