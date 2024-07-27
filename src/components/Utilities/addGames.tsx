@@ -1,8 +1,17 @@
-const addGames = async (userId: string, gameId: number, gameName: string, callback: (data: any) => void) => {
+const addGames = async (
+    userId: string,
+    gameId: number,
+    gameName: string,
+    callback: (data: any) => void,
+    rating: number,
+    notes: string
+) => {
     const requestBody = {
         userId: userId,
         gameId: gameId,
-        gameName: gameName
+        gameName: gameName,
+        rating: rating,
+        notes: notes
     };
 
     try {

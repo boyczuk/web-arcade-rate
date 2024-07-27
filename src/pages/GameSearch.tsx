@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import SearchBar from '../components/Utilities/SearchBar';
 import searchGames from '../components/Utilities/searchGames';
 import addGames from '../components/Utilities/addGames';
 import { Game } from '../components/Types/Game';
@@ -8,6 +7,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import AddGameModal from '../components/Utilities/addGamesModal';
 import './GameSearch.css';
 
 interface UserData {
@@ -21,6 +21,8 @@ const GameSearch = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [addedGames, setAddedGames] = useState<number[]>([]);
     const [userData, setUserData] = useState<UserData | undefined>();
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedGame, setSelectedGame] = useState<{ gameId: number; gameName: string } | null>(null);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async user => {
@@ -62,16 +64,25 @@ const GameSearch = () => {
         }
     };
 
-    const handleAddGame = async (gameId: number, gameName: string) => {
+    const handleOpenModal = (gameId: number, gameName: string) => {
+        setSelectedGame({ gameId, gameName });
+        setModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setModalOpen(false);
+        setSelectedGame(null);
+    };
+
+    const handleAddGame = async (gameId: number, gameName: string, rating: number, notes: string) => {
         if (userData && userData.userId) {
-            addGames(userData.userId, gameId, gameName, (response) => {
+            await addGames(userData.userId, gameId, gameName, (response) => {
                 console.log('Game added:', response);
                 setAddedGames(prevGames => [...prevGames, gameId]);
-            })
+            }, rating, notes);
         } else {
             console.error('User data not available. Cannot add game.');
         }
-
     };
 
     return (
@@ -102,7 +113,7 @@ const GameSearch = () => {
                                 className='addGameButton'
                                 color="primary"
                                 aria-label="add to profile"
-                                onClick={() => handleAddGame(game.id, game.name)}
+                                onClick={() => handleOpenModal(game.id, game.name)}
                             >
                                 {addedGames.includes(game.id) ? <CheckCircleIcon /> : <AddCircleOutlineIcon />}
                             </IconButton>
@@ -110,6 +121,15 @@ const GameSearch = () => {
                     </div>
                 ))}
             </div>
+            {selectedGame && (
+                <AddGameModal
+                    open={modalOpen}
+                    handleClose={handleCloseModal}
+                    handleAddGame={handleAddGame}
+                    gameId={selectedGame.gameId}
+                    gameName={selectedGame.gameName}
+                />
+            )}
         </div>
     );
 };

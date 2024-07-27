@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase'; 
-import { Game } from '../../components/Types/Game';
-import './Profile.css'
+import './Profile.css';
 import { useParams } from 'react-router-dom';
+import { Rating } from '@mui/material';
 
 interface UserData {
     uid: string;
     username: string;
     name: string;
-    games: number[];
+    games: {
+        gameId: number;
+        gameName: string;
+        rating: number;
+        notes: string;
+    }[];
     photoURL?: string;
+    // Add other user properties as needed
 }
 
 async function fetchUserData(userId: string): Promise<UserData | undefined> {
@@ -18,7 +24,8 @@ async function fetchUserData(userId: string): Promise<UserData | undefined> {
     const userDoc = await getDoc(userDocRef);
     if (userDoc.exists()) {
         const data = userDoc.data();
-        const gamesArray = data.games ? data.games.split(",").map(Number) : [];
+        console.log("Fetched user data:", data); // Debugging statement
+        const gamesArray = Array.isArray(data.games) ? data.games : [];
         return {
             uid: userId,
             username: data.username,
@@ -34,39 +41,12 @@ async function fetchUserData(userId: string): Promise<UserData | undefined> {
 const UserProfile: React.FC = () => {
     const { userId } = useParams<{ userId: string }>();
     const [userData, setUserData] = useState<UserData | undefined>();
-    const [games, setGames] = useState<Game[]>([]);
-
-    const loadUserGames = async () => {
-        if (!userData) {
-            console.log("User data is undefined, cannot load games.");
-            return;
-        }
-
-        try {
-            const fetchedGames = [];
-            for (let gameId of userData.games) {
-                const response = await fetch(`http://localhost:3001/fetch-game-by-id?id=${gameId}`);
-                const gameDataArray = await response.json(); 
-                const gameData = gameDataArray[0]; 
-                fetchedGames.push(gameData);
-            }
-            //console.log("Fetched Games:", fetchedGames);
-            setGames(fetchedGames);
-        } catch (error) {
-            console.error('Failed to fetch games:', error);
-        }
-    };
-
-    useEffect(() => {
-        if (userData) {
-            loadUserGames();
-        }
-    }, [userData]);
 
     useEffect(() => {
         const fetchData = async () => {
             if (userId) {
                 const data = await fetchUserData(userId);
+                console.log("User data set to state:", data); // Debugging statement
                 if (data) {
                     setUserData(data);
                 }
@@ -80,9 +60,10 @@ const UserProfile: React.FC = () => {
         return <div>Loading...</div>;
     }
 
-    const getLargeCoverUrl = (url: string) => {
-        return url.replace('t_thumb', 't_cover_big');
-    };
+    if (!Array.isArray(userData.games)) {
+        console.error('userData.games is not an array', userData.games);
+        return <div>Error: Invalid data structure</div>;
+    }
 
     return (
         <div className="profile-container">
@@ -99,16 +80,13 @@ const UserProfile: React.FC = () => {
                 <p>Name: {userData.name}</p>
                 <div className='user-games'>
                     <h2>Games</h2>
-                    {games.length > 0 ? (
+                    {userData.games.length > 0 ? (
                         <ul>
-                            {games.map((game, index) => (
+                            {userData.games.map((game, index) => (
                                 <li key={index}>
-                                    {game.cover && game.cover.url ? (
-                                        <img src={getLargeCoverUrl(game.cover.url)} alt={`${game.name} cover`} style={{ width: '100px', height: 'auto' }} />
-                                    ) : (
-                                        <div style={{ height: '100px', width: '100px', backgroundColor: '#ccc' }}>No cover</div>
-                                    )}
-                                    <p>{game.name}</p>
+                                    <p>{game.gameName}</p>
+                                    <Rating value={game.rating} readOnly />
+                                    <p>{game.notes}</p>
                                 </li>
                             ))}
                         </ul>

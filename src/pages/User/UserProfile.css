@@ -1,0 +1,44 @@
+.profile-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.image-container {
+    margin-bottom: 20px;
+}
+
+.image-placeholder {
+    width: 100px;
+    height: 100px;
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    text-align: left;
+}
+
+.user-games {
+    margin-top: 20px;
+}
+
+.user-games ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-games li {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.user-games li p {
+    margin: 0;
+}

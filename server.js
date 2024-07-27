@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const { getAccessToken } = require('./auth');
 const { searchGames } = require('./igdb'); 
-
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const path = require('path');
@@ -17,7 +16,7 @@ admin.initializeApp({
     projectId: 'arcade-rate'
 });
 
-const db = admin.firestore()
+const db = admin.firestore();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -53,7 +52,6 @@ app.get('/search-games', async (req, res) => {
     }
 });
 
-
 app.get('/fetch-game-by-id', async (req, res) => {
     try {
         const token = await getAccessToken();
@@ -67,7 +65,7 @@ app.get('/fetch-game-by-id', async (req, res) => {
 });
 
 app.post('/add-game', async (req, res) => {
-    const { userId, gameId, gameName } = req.body;
+    const { userId, gameId, gameName, rating, notes } = req.body;
 
     if (!userId || !gameId) {
         return res.status(400).send("Missing userId or gameId");
@@ -82,17 +80,21 @@ app.post('/add-game', async (req, res) => {
         }
 
         const userData = userDoc.data();
-        let updatedGames = userData.games ? userData.games.split(',').map(Number) : [];
+        const gamesArray = Array.isArray(userData.games) ? userData.games : [];
 
-        if (!updatedGames.includes(gameId)) {
-            updatedGames.push(gameId);
-            await userRef.update({ games: updatedGames.join(',') });
+        const newGame = { gameId, gameName, rating, notes };
+
+        const gameExists = gamesArray.some(game => game.gameId === gameId);
+
+        if (!gameExists) {
+            gamesArray.push(newGame);
+            await userRef.update({ games: gamesArray });
             res.status(200).json({ message: "Game added successfully" });
         } else {
             return res.status(400).send("Game already exists");
         }
     } catch (error) {
-        console.error('Error updating user profile:', erorr);
+        console.error('Error updating user profile:', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
