@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Box, TextField, Button, Rating } from '@mui/material';
-import './addGamesModal.css'
+import './addGamesModal.css';
 
 interface AddGameModalProps {
     open: boolean;
@@ -29,6 +29,7 @@ const AddGameModal: React.FC<AddGameModalProps> = ({ open, handleClose, handleAd
                     name="game-rating"
                     value={rating}
                     onChange={(event, newValue) => setRating(newValue)}
+                    precision={0.5}
                 />
                 <TextField
                     label="Notes"

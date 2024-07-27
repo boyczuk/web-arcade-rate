@@ -19,6 +19,7 @@ interface UserData {
     name: string;
     games: Game[];
     photoURL?: string;
+    // Add other user properties as needed
 }
 
 async function fetchUserData(): Promise<UserData | undefined> {
@@ -57,9 +58,9 @@ const Profile = () => {
             const fetchedGames = [];
             for (let game of userData.games) {
                 const response = await fetch(`http://localhost:3001/fetch-game-by-id?id=${game.gameId}`);
-                const gameDataArray = await response.json(); 
-                const gameData = gameDataArray[0]; 
-                fetchedGames.push({ ...gameData, ...game }); 
+                const gameDataArray = await response.json(); // Assuming this is an array containing one game object
+                const gameData = gameDataArray[0]; // Take the first element from the array
+                fetchedGames.push({ ...gameData, ...game }); // Merge the game object with existing data
             }
             console.log("Fetched Games:", fetchedGames);
             setGames(fetchedGames);
@@ -113,7 +114,7 @@ const Profile = () => {
                             {games.map((game, index) => (
                                 <li key={index}>
                                     <p>{game.gameName}</p>
-                                    <Rating value={game.rating} readOnly />
+                                    <Rating value={game.rating} readOnly precision={0.5} />
                                     <p>{game.notes}</p>
                                     {games[index]?.cover?.url ? (
                                         <img src={getLargeCoverUrl(games[index].cover?.url)} alt={`${games[index].gameName} cover`} style={{ width: '100px', height: 'auto' }} />
@@ -127,6 +128,7 @@ const Profile = () => {
                         <p>No games to display yet.</p>
                     )}
                 </div>
+                {/* Display other user data as needed */}
             </div>
         </div>
     );
