@@ -1,6 +1,7 @@
 .Navbar {
-    background-color: transparent !important;
+    background-color: rgba(0, 0, 0, 0.511) !important;
     box-shadow: none !important;
+    height: 15%;
 }
 
 .NavbarContainer {
