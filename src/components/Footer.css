@@ -14,13 +14,27 @@
     flex-grow: 1;
     color: white;
     text-align: left;
+    font-weight:400;
 }
 
 .social_media-links {
     display: flex;
-    gap: 20px;  
-    flex-direction: row;
+    flex-direction: column; /* Stack "Connect with us on" above the icons */
+    align-items: center; /* Center align the text and icons */
     margin-left: 15%;
+}
+
+.social_media-links h2 {
+    margin-bottom: 10px; /* Add space below the "Connect with us on" text */
+    text-align: center; /* Center the text */
+    color: white;
+}
+
+.icons {
+    display: flex;
+    flex-direction: row; /* Ensure icons are in a row */
+    justify-content: space-around; /* Distribute icons evenly */
+    gap: 20px; /* Space between icons */
 }
 
 .social_media-links .MuiSvgIcon-root { 
