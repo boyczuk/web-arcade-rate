@@ -2,6 +2,7 @@ import React, { useState, FormEvent, ChangeEvent } from 'react';
 import { AppBar, Toolbar, Container } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
 import AuthService from '../authService';
+import ArcadeRateLogo from '../assets/ArcadeRateLogo2.jpg';
 import './TopNavbarLoggedIn.css';
 
 function TopNavbarLoggedIn() {
@@ -35,7 +36,9 @@ function TopNavbarLoggedIn() {
                 <Toolbar className='NavbarToolbar'>
                     <div className='LogoContainer'>
                         <NavLink to='/'>
-                            <div className='logo'><p>Arcade-Rate</p></div>
+                            <div className='logo'>
+                                <img src={ArcadeRateLogo} alt="Arcade rate logo"></img>
+                            </div>
                         </NavLink>
                     </div>
 

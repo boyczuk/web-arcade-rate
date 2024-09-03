@@ -3,6 +3,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Logo from '../assets/CopyFreeBackground.jpg';
 import { NavLink } from 'react-router-dom';
+import ArcadeRateLogo from '../assets/ArcadeRateLogo2.jpg';
 import './TopNavbarLoggedOut.css';
 
 function TopNavbar() {
@@ -12,7 +13,9 @@ function TopNavbar() {
                 <Toolbar className='NavbarToolbar'>
                     <div className='LogoContainer'>
                         <NavLink to='/'>
-                            <div className='logo'><p>Arcade-Rate</p></div>
+                            <div className='logo'>
+                                <img src={ArcadeRateLogo} alt="Arcade rate logo"></img>
+                            </div>
                         </NavLink>
                     </div>
 

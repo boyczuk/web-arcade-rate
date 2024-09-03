@@ -55,10 +55,10 @@
 /* Make it so that the image doesn't stretch the full page, then set the background colour to whats on the figma */
 .description {
   color: white;
-  font-weight: bold;
   text-align: left;
   font-size: 22px;
   z-index: 1;
+  line-height: 1.8;
   margin-left: 10%;
   margin-right: 10%;
   margin-bottom: 10%;
