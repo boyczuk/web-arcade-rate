@@ -52,19 +52,27 @@
 }
 
 .MenuLink {
-    margin-left: 30px;
-    margin-right: 30px; 
-    text-decoration: none;
-    color: inherit;
+    display: block;
+    padding: 10px 15px;
+    color: white; 
+    text-decoration: none; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+}
+
+.MenuLink:hover {
+    color: white;
+    text-decoration: underline; 
 }
 
 .MenuLink h2 {
     margin: 0; 
 }
 
-.MenuLink:hover {
-    text-decoration: underline; 
-}
 
 .ProfileLink {
     position: relative;
@@ -84,16 +92,44 @@
 .DropdownMenu {
     position: absolute;
     top: 100%; 
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.529); 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #211F2A; /* Match the Navbar background color */
     z-index: 100;
-    width: 100%; 
+    width: 150px; /* Adjust the width as needed */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.DropdownMenu li {
+    list-style-type: none; 
+}
+
+.ProfileLink {
+    position: relative; /* Ensure the DropdownMenu is positioned relative to ProfileLink */
+}
+
+.DropdownMenu .MenuLink {
+    display: block;
+    padding: 10px 15px;
+    color: white; 
+    text-decoration: none; 
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    text-align: left;
+}
+
+.DropdownMenu .MenuLink:hover {
+    color: white;
 }
 
 .DropdownMenu .DropdownItem {
     display: block; 
-    padding: 10px; 
-    color: black; 
+    padding: 10px;
+    color: white; 
     text-decoration: none; 
     width: 100%; 
     border-bottom: 1px solid #ccc; 
@@ -104,7 +140,8 @@
 }
 
 .DropdownMenu .DropdownItem:hover {
-    background-color: #f0f0f0; 
+    background-color: #333; /* Darken background on hover for contrast */
+    color: white; /* Keep text color consistent */
 }
 
 /* New styles for search input and button */

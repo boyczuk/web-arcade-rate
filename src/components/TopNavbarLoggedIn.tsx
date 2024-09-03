@@ -66,16 +66,18 @@ function TopNavbarLoggedIn() {
                             onMouseEnter={() => setDropdownOpen(true)}
                             onMouseLeave={() => setDropdownOpen(false)}>
                             <NavLink to='/Profile' className='MenuLink'>
-                                <h2>Profile <span>▼</span></h2>
+                                <h2>Profile</h2>
                             </NavLink>
                             {dropdownOpen && (
                                 <div className='DropdownMenu'>
-                                    <NavLink to='/profile/settings' className='MenuLink'>Settings</NavLink>
+                                    <li><NavLink to='/profile/settings' className='MenuLink'>Settings</NavLink></li>
+                                    <li><NavLink to='/profile' className='MenuLink'>My Games</NavLink></li>
+                                    <li><button className='MenuLink' onClick={handleLogout}>Logout</button></li>
                                 </div>
                             )}
                         </div>
 
-                        <button className='logout' onClick={handleLogout}>Logout</button>
+                        
                     </div>
                 </Toolbar>
             </Container>
