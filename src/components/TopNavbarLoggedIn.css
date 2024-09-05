@@ -1,6 +1,8 @@
 .Navbar {
     background-color: #211F2A !important;
     box-shadow: none !important;
+    height: auto; 
+    padding: 3px 0;
 }
 
 .NavbarContainer {
@@ -94,9 +96,9 @@
     top: 100%; 
     left: 50%;
     transform: translateX(-50%);
-    background-color: #211F2A; /* Match the Navbar background color */
+    background-color: #211F2A;
     z-index: 100;
-    width: 150px; /* Adjust the width as needed */
+    width: 150px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -107,7 +109,7 @@
 }
 
 .ProfileLink {
-    position: relative; /* Ensure the DropdownMenu is positioned relative to ProfileLink */
+    position: relative;
 }
 
 .DropdownMenu .MenuLink {
@@ -140,11 +142,10 @@
 }
 
 .DropdownMenu .DropdownItem:hover {
-    background-color: #333; /* Darken background on hover for contrast */
-    color: white; /* Keep text color consistent */
+    background-color: #333; 
+    color: white; 
 }
 
-/* New styles for search input and button */
 .search-input {
     padding: 8px 12px;
     border: 1px solid #ccc;

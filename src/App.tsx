@@ -4,6 +4,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from './firebase';
 
 import Home from './pages/Home';
+import HomeLoggedIn from './pages/HomeLoggedIn';
 import TopNavbarLoggedIn from './components/TopNavbarLoggedIn';
 import TopNavbarLoggedOut from './components/TopNavbarLoggedOut';
 import Footer from './components/Footer';
@@ -33,7 +34,7 @@ function App() {
       {currentUser ? <TopNavbarLoggedIn /> : <TopNavbarLoggedOut />}
       <div className='content'>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={currentUser ? <HomeLoggedIn /> : <Home />} />
           <Route path="/search" element={<GameSearch />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />

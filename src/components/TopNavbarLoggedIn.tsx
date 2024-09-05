@@ -41,17 +41,18 @@ function TopNavbarLoggedIn() {
                             </div>
                         </NavLink>
                     </div>
-
-                    <form onSubmit={handleSearchSubmit} style={{ display: 'flex', alignItems: 'center' }}>
-                        <input
-                            className="search-input"
-                            type="text"
-                            placeholder="Search users..."
-                            value={searchTerm}
-                            onChange={handleInputChange}
-                        />
-                        <button className="search-button" type="submit">Search</button>
-                    </form>
+                    <div className='search-container'>
+                        <form onSubmit={handleSearchSubmit} style={{ display: 'flex', alignItems: 'center' }}>
+                            <input
+                                className="search-input"
+                                type="text"
+                                placeholder="Search users..."
+                                value={searchTerm}
+                                onChange={handleInputChange}
+                            />
+                            <button className="search-button" type="submit">Search</button>
+                        </form>
+                    </div>
 
                     <div className='MenuContainer'>
                         <NavLink to='/' className='MenuLink'>
@@ -77,7 +78,7 @@ function TopNavbarLoggedIn() {
                             )}
                         </div>
 
-                        
+
                     </div>
                 </Toolbar>
             </Container>
