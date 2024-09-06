@@ -1,3 +1,32 @@
+.password-container {
+    display: flex;
+    align-items: center;
+
+}
+
+.password-container input {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.show-password-button {
+    margin-left: 10px;
+    padding: 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.show-password-button:hover {
+    background-color: #0056b3;
+}
+
 .error-message p {
     color: #FF6B6B;
     font-size: 14px;

@@ -4,7 +4,7 @@ import LoginForm from '../../components/User/LoginComponent';
 import SignupForm from '../../components/User/SignupComponent';
 import './Login.css'
 
-const LoginComponent: React.FC = () => {
+const Login: React.FC = () => {
     const [isLoginMode, setIsLoginMode] = useState(true);
 
     const switchMode = () => setIsLoginMode(!isLoginMode);
@@ -20,4 +20,4 @@ const LoginComponent: React.FC = () => {
     );
 };
 
-export default LoginComponent;
+export default Login;

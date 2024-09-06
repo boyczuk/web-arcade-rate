@@ -18,10 +18,21 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchMode }) => {
     const [password, setPassword] = useState('');
     const [verifyPassword, setVerifyPassword] = useState('');
 
+    const [showPassword, setShowPassword] = useState(false);
+    const [showVerifyPassword, setShowVerifyPassword] = useState(false);
+
     const [signupFailed, setSignupFailed] = useState(false);
     const [error, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const toggleVerifyPasswordVisibility = () => {
+        setShowVerifyPassword(!showVerifyPassword);
+    }
 
     const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -93,8 +104,37 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchMode }) => {
                 <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
                 <input type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <input type="date" placeholder="Birthday" value={birthday} onChange={(e) => setBirthday(e.target.value)} />
-                <input type="password" placeholder="Create your password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <input type="password" placeholder="Verify your password" value={verifyPassword} onChange={(e) => setVerifyPassword(e.target.value)} />
+                <div className="password-container">
+                    <input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Create your password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        onClick={togglePasswordVisibility}
+                        className="show-password-button"
+                    >
+                        {showPassword ? 'Hide' : 'Show'}
+                    </button>
+                </div>
+
+                <div className="password-container">
+                    <input
+                        type={showVerifyPassword ? 'text' : 'password'}
+                        placeholder="Verify your password"
+                        value={verifyPassword}
+                        onChange={(e) => setVerifyPassword(e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        onClick={toggleVerifyPasswordVisibility}
+                        className="show-password-button"
+                    >
+                        {showVerifyPassword ? 'Hide' : 'Show'}
+                    </button>
+                </div>
                 <button type="submit">Sign up</button>
             </form>
 
