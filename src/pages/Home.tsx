@@ -18,6 +18,23 @@ interface HomeProps {
     currentUser: any;
 }
 
+const getLargeCoverUrl = (url: string | undefined) => {
+    return url ? url.replace('t_thumb', 't_cover_big') : '';
+};
+
+
+const fetchGameCover = async (gameId: number): Promise<string | undefined> => {
+    try {
+        const response = await fetch(`http://localhost:3001/fetch-game-by-id?id=${gameId}`);
+        const gameDataArray = await response.json();
+        const gameData = gameDataArray[0];
+        return gameData.cover ? gameData.cover.url : undefined;
+    } catch (error) {
+        console.error('Failed to fetch game cover:', error);
+        return undefined;
+    }
+};
+
 const Home: React.FC<HomeProps> = ({ currentUser }) => {
     const [popularGames, setPopularGames] = useState<Game[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -25,8 +42,17 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
     useEffect(() => {
         const fetchGames = async () => {
             setIsLoading(true);
+
             const mostReviewedGames = await getMostReviewedGames();
-            setPopularGames(mostReviewedGames);
+
+            const gamesWithCovers = await Promise.all(
+                mostReviewedGames.map(async (game) => {
+                    const coverUrl = await fetchGameCover(Number(game.id));
+                    return { ...game, cover: { url: coverUrl } };
+                })
+            );
+
+            setPopularGames(gamesWithCovers);
             setIsLoading(false);
         };
 
@@ -76,7 +102,12 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
                                 {popularGames.length > 0 ? (
                                     popularGames.map((game, index) => (
                                         <div key={index} className="game-card">
-                                            <img src={game.cover?.url || 'placeholder.jpg'} alt={game.gameName} className="game-image" />
+                                            {game.cover?.url ? (
+                                                <img src={getLargeCoverUrl(game.cover.url)} alt={game.gameName} className="game-image" />
+                                            ) : (
+                                                <img src={'placeholder.jpg'} alt="No cover available" className="game-image" />
+                                            )}
+                                            <p>{game.gameName}</p>
                                             <p>Reviews: {game.reviewsCount}</p>
                                             <Rating
                                                 name={`rating-${index}`}
