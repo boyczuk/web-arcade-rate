@@ -19,17 +19,46 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchMode }) => {
     const [verifyPassword, setVerifyPassword] = useState('');
 
     const [signupFailed, setSignupFailed] = useState(false);
-    const [passwordMismatch, setPasswordMismatch] = useState(false);
+    const [error, setErrorMessage] = useState("");
 
     const navigate = useNavigate();
 
     const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (name == "") {
+            setSignupFailed(true);
+            setErrorMessage('Name can\'t be empty');
+            return;
+        }
+
+        if (username == "") {
+            setSignupFailed(true);
+            setErrorMessage('Username can\'t be empty');
+            return;
+        }
+
+        if (email == "") {
+            setSignupFailed(true);
+            setErrorMessage('Email can\'t be empty');
+            return;
+        }
+
+        if (birthday == "") {
+            setSignupFailed(true);
+            setErrorMessage('Birthday can\'t be empty');
+            return;
+        }
+
+        if (password == "") {
+            setSignupFailed(true);
+            setErrorMessage('Password can\'t be empty');
+            return;
+        }
+
         if (password !== verifyPassword) {
             setSignupFailed(true);
-            console.error(("Passwords don't match"));
-            setPasswordMismatch(true);
+            setErrorMessage('Passwords do not match');
             return;
         }
 
@@ -49,13 +78,10 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchMode }) => {
             setSignupFailed(true);
             if (error instanceof Error) {
                 console.error("Signup failed:", error.message);
-        
-                const firebaseError = error as any;
-                if (firebaseError.response && firebaseError.response.data) {
-                    console.error("Detailed error:", firebaseError.response.data.error.message);
-                }
+                //setErrorMessage(error.message);
             } else {
                 console.error("An unknown error occurred during signup");
+                setErrorMessage("An unknown error occurred during signup");
             }
         }
     };
@@ -73,8 +99,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchMode }) => {
             </form>
 
             <div className="error-message">
-                {signupFailed && <p>Registration failed</p>}
-                {passwordMismatch && <p>Passwords do not match</p>}
+                {signupFailed && error && <p>{error}</p>}
             </div>
             <button className='switch-button' onClick={onSwitchMode}>Already have an account? Log in</button>
         </div>
