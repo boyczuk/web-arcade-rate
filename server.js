@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { getAccessToken } = require('./auth');
-const { searchGames } = require('./igdb'); 
+const { searchGames } = require('./igdb');
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const path = require('path');
@@ -43,7 +43,7 @@ app.use(express.json());
 
 app.get('/search-games', async (req, res) => {
     try {
-        const token = await getAccessToken(); 
+        const token = await getAccessToken();
         const data = await searchGames(token, req.query.q);
         res.json(data);
     } catch (error) {
@@ -89,15 +89,48 @@ app.post('/add-game', async (req, res) => {
         if (!gameExists) {
             gamesArray.push(newGame);
             await userRef.update({ games: gamesArray });
-            res.status(200).json({ message: "Game added successfully" });
+            console.log(`Game added to user's profile: ${gameName}`);
+
+            const gameRef = db.collection('games').doc(String(gameId));
+            const gameDoc = await gameRef.get();
+
+            if (gameDoc.exists) {
+                const gameData = gameDoc.data();
+                const newReviewsCount = gameData.reviewsCount + 1;
+                const newTotalRatingSum = gameData.totalRatingSum + rating;
+
+                const newAverageRating = newTotalRatingSum / newReviewsCount;
+
+                await gameRef.update({
+                    reviewsCount: newReviewsCount,
+                    totalRatingSum: newTotalRatingSum,
+                    averageRating: newAverageRating,
+                });
+
+                console.log(`Incremented reviewsCount and updated rating for game: ${gameName}`);
+                res.status(200).json({ message: "Game added to user's profile and review count incremented." });
+            } else {
+                await gameRef.set({
+                    gameName,
+                    reviewsCount: 1,
+                    totalRatingSum: rating,
+                    averageRating: rating,
+                    cover: null, 
+                });
+
+                console.log(`New game added to games collection: ${gameName}`);
+                res.status(200).json({ message: "Game added to user's profile and new game created in games collection." });
+            }
         } else {
-            return res.status(400).send("Game already exists");
+            return res.status(400).send("Game already exists in the user's profile.");
         }
     } catch (error) {
-        console.error('Error updating user profile:', error);
+        console.error('Error updating user profile or adding game:', error);
         res.status(500).json({ message: 'Internal server error.' });
     }
 });
+
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -1,21 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
+import { Rating } from '@mui/material'; 
+import { getMostReviewedGames } from '../helpers/firestoreHelpers';
 import './Home.css';
 
+interface Game {
+    id: string;
+    gameName: string;
+    reviewsCount: number;
+    averageRating: number; 
+    cover?: {
+        url?: string;
+    };
+}
+
 interface HomeProps {
-    currentUser: any;  
+    currentUser: any;
 }
 
 const Home: React.FC<HomeProps> = ({ currentUser }) => {
-    //Replcae with backend connection to find these? Maybe a stack for recent reviews 
-    // or add up how many games have been added to each profile over period of time
-    const popularGames = [
-        { title: 'Cyberpunk 2077', image: 'cyberpunk.jpg', rating: 5 },
-        { title: 'Grand Theft Auto V', image: 'gtav.jpg', rating: 5 },
-        { title: 'Overwatch', image: 'overwatch.jpg', rating: 4.5 },
-        { title: 'NHL 24', image: 'nhl24.jpg', rating: 4 },
-        { title: 'Minecraft', image: 'minecraft.jpg', rating: 5 }
-    ];
+    const [popularGames, setPopularGames] = useState<Game[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchGames = async () => {
+            setIsLoading(true);
+            const mostReviewedGames = await getMostReviewedGames();
+            setPopularGames(mostReviewedGames);
+            setIsLoading(false);
+        };
+
+        fetchGames();
+    }, []);
 
     const recentReviews = [
         { user: 'User1', game: 'Cyberpunk 2077', review: 'Definitely my all-time #1 game' },
@@ -52,18 +68,29 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
             {currentUser && (
                 <>
                     <div className="popular-games">
-                        <h3>Top 5 Most Popular Games Today</h3>
-                        <div className="games-row">
-                            {popularGames.map((game, index) => (
-                                <div key={index} className="game-card">
-                                    <img src={game.image} alt={game.title} className="game-image" />
-                                    <h4>{game.title}</h4>
-                                    <div className="game-rating">
-                                        {'★'.repeat(Math.floor(game.rating))}{game.rating % 1 !== 0 && '☆'}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        <h3>Top 5 Most Reviewed Games</h3>
+                        {isLoading ? (
+                            <p>Loading games...</p>
+                        ) : (
+                            <div className="games-row">
+                                {popularGames.length > 0 ? (
+                                    popularGames.map((game, index) => (
+                                        <div key={index} className="game-card">
+                                            <img src={game.cover?.url || 'placeholder.jpg'} alt={game.gameName} className="game-image" />
+                                            <p>Reviews: {game.reviewsCount}</p>
+                                            <Rating
+                                                name={`rating-${index}`}
+                                                value={game.averageRating}
+                                                precision={0.5} 
+                                                readOnly
+                                            />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>No popular games available.</p>
+                                )}
+                            </div>
+                        )}
                     </div>
                     <div className='color-divider'></div>
 
