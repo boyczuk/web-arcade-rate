@@ -1,0 +1,20 @@
+.error-message p {
+    color: #FF6B6B;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.switch-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    margin-top: 15px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 10px 0;
+}
+
+.switch-button:hover {
+    color: #25C4F8;
+}

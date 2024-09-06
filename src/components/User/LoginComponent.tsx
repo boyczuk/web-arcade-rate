@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../../src/authService';
 
+import './LoginComponent.css';
+
 interface LoginFormProps {
     onSwitchMode: () => void;
   }
@@ -33,7 +35,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSwitchMode }) => {
             <div className="error-message">
                 {loginFailed && <p>Incorrect password or username</p>}
             </div>
-            <button onClick={onSwitchMode}>Need an account? Sign up</button>
+            <button className='switch-button' onClick={onSwitchMode}>Need an account? Sign up</button>
         </div>
     );
 };

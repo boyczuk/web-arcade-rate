@@ -4,6 +4,7 @@ import AuthService from '../../../src/authService';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
+import './SignupComponent.css';
 
 interface SignupFormProps {
     onSwitchMode: () => void;
@@ -75,7 +76,7 @@ const SignupForm: React.FC<SignupFormProps> = ({ onSwitchMode }) => {
                 {signupFailed && <p>Registration failed</p>}
                 {passwordMismatch && <p>Passwords do not match</p>}
             </div>
-            <button onClick={onSwitchMode}>Already have an account? Log in</button>
+            <button className='switch-button' onClick={onSwitchMode}>Already have an account? Log in</button>
         </div>
     );
 };
