@@ -64,6 +64,45 @@ app.get('/fetch-game-by-id', async (req, res) => {
     }
 });
 
+app.post('/remove-game', async (req, res) => {
+    const { userId, gameId } = req.body;
+
+    if (!gameId) {
+        return res.status(400).json({ error: "Missing gameId" });
+    }
+
+    if (!userId) {
+        return res.status(400).json({ error: "Missing userId" });
+    }
+
+    try {
+        const docRef = db.collection('users').doc(userId);
+
+        const docSnapshot = await docRef.get();
+        if (!docSnapshot.exists) {
+            return res.status(404).json({ error: "User document not found" });
+        }
+
+        const data = docSnapshot.data();
+        const games = data.games || [];
+
+        const gameToRemove = games.find((game) => game.gameId === gameId);
+
+        if (!gameToRemove) {
+            return res.status(404).json({ error: "Game not found" });
+        }
+
+        await docRef.update({
+            games: admin.firestore.FieldValue.arrayRemove(gameToRemove),
+        });
+
+        return res.status(200).json({ message: "Game removed successfully" });
+    } catch (error) {
+        console.error("Error removing game: ", error);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 app.post('/add-game', async (req, res) => {
     const { userId, gameId, gameName, rating, notes } = req.body;
 

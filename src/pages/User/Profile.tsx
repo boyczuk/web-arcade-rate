@@ -20,7 +20,6 @@ interface UserData {
     name: string;
     games: Game[];
     photoURL?: string;
-    // Add other user properties as needed
 }
 
 async function fetchUserData(): Promise<UserData | undefined> {
@@ -92,6 +91,35 @@ const Profile = () => {
         }
     };
 
+    const removeGame = async (gameId: number) => {
+        if (!user) {
+            console.error('No user is signed in');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3001/remove-game', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: user.uid,  
+                    gameId             
+                }),
+            });
+
+            if (response.ok) {
+                console.log('Game removed successfully');
+                setGames(games.filter((game) => game.gameId !== gameId));
+            } else {
+                console.error('Failed to remove game.');
+            }
+        } catch (error) {
+            console.error('Error: ', error);
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             const data = await fetchUserData();
@@ -100,7 +128,7 @@ const Profile = () => {
             } else {
                 console.log("No user data found.");
             }
-            setIsLoading(false); 
+            setIsLoading(false);
         };
 
         fetchData();
@@ -151,6 +179,7 @@ const Profile = () => {
                                     ) : (
                                         <div style={{ height: '100px', width: '100px', backgroundColor: '#ccc' }}>No cover</div>
                                     )}
+                                    <button onClick={() => removeGame(game.gameId)} className='remove-button'>X</button>
                                 </li>
                             ))}
                         </ul>
