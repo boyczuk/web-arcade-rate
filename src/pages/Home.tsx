@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
-import { Rating } from '@mui/material'; 
-import { getMostReviewedGames } from '../helpers/firestoreHelpers';
+import { Rating } from '@mui/material';
+import { getMostReviewedGames, getRecentReviews } from '../helpers/firestoreHelpers';
 import './Home.css';
 
 interface Game {
     id: string;
     gameName: string;
     reviewsCount: number;
-    averageRating: number; 
+    averageRating: number;
     cover?: {
         url?: string;
     };
@@ -18,10 +18,9 @@ interface Review {
     id: string;
     gameName: string;
     rating: number;
-    cover?: {
-        url?: string;
-    };
     comment: string;
+    userId: string;
+    createdAt: any; 
 }
 
 interface HomeProps {
@@ -48,7 +47,7 @@ const fetchGameCover = async (gameId: number): Promise<string | undefined> => {
 const Home: React.FC<HomeProps> = ({ currentUser }) => {
     const [popularGames, setPopularGames] = useState<Game[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [recentReviews2, setRecentReviews] = useState<Review[]>([]);
+    const [recentReviews, setRecentReviews] = useState<Review[]>([]);
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -71,17 +70,14 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
     }, []);
 
     useEffect(() => {
-        const getRecentReviews = async () => {
+        const fetchRecentReviews = async () => {
+            const reviews = await getRecentReviews();
+            setRecentReviews(reviews);
+        };
 
-        }
-    })
+        fetchRecentReviews();
 
-    const recentReviews = [
-        { user: 'User1', game: 'Cyberpunk 2077', review: 'Definitely my all-time #1 game' },
-        { user: 'User2', game: 'Grand Theft Auto V', review: 'Endlessly entertaining and always something to do!' },
-        { user: 'User3', game: 'Overwatch', review: 'Great for team play, but needs more updates.' },
-        { user: 'User4', game: 'NHL 24', review: 'Fun for hockey fans, but needs better graphics.' },
-    ];
+    }, []);
 
     return (
         <>
@@ -99,7 +95,7 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
                         <h1></h1>
                         <p>
                             Dive into the world of gaming with Arcade-Rate! Keep track of every game you've played, rank your favorites, and see how your taste
-                            evolves over time. Whether you're a casual gamer or a hardcore enthusiast, our platform helps you organize your gaming 
+                            evolves over time. Whether you're a casual gamer or a hardcore enthusiast, our platform helps you organize your gaming
                             experiences and connect with others who share your passion. Start your journey today!
                         </p>
                     </div>
@@ -129,7 +125,7 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
                                             <Rating
                                                 name={`rating-${index}`}
                                                 value={game.averageRating}
-                                                precision={0.5} 
+                                                precision={0.5}
                                                 readOnly
                                             />
                                         </div>
@@ -145,12 +141,22 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
                     <div className="recent-reviews">
                         <h3>Recent Reviews from the Community</h3>
                         <div className="reviews-feed">
-                            {recentReviews.map((review, index) => (
-                                <div key={index} className="review-post">
-                                    <strong>{review.user}</strong> reviewed <em>{review.game}</em>:
-                                    <p>{review.review}</p>
-                                </div>
-                            ))}
+                            {recentReviews.length > 0 ? (
+                                recentReviews.map((review, index) => (
+                                    <div key={index} className="review-post">
+                                        <strong>{review.userId}</strong> reviewed <em>{review.gameName}</em>:
+                                        <p>{review.comment}</p>
+                                        <Rating
+                                            name={`rating-${index}`}
+                                            value={review.rating}
+                                            precision={0.5}
+                                            readOnly
+                                        />
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No reviews available.</p>
+                            )}
                         </div>
                     </div>
                     <div className='color-divider'></div>
