@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { Rating } from '@mui/material';
-import { getMostReviewedGames, getRecentReviews } from '../helpers/firestoreHelpers';
+import { getMostReviewedGames, getRecentReviews, getUserProfile } from '../helpers/firestoreHelpers';
 import './Home.css';
 
 interface Game {
@@ -18,9 +18,11 @@ interface Review {
     id: string;
     gameName: string;
     rating: number;
-    comment: string;
+    notes: string;
     userId: string;
-    createdAt: any; 
+    userName?: string;
+    profilePic?: string;
+    createdAt: any;
 }
 
 interface HomeProps {
@@ -72,7 +74,15 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
     useEffect(() => {
         const fetchRecentReviews = async () => {
             const reviews = await getRecentReviews();
-            setRecentReviews(reviews);
+
+            const reviewsWithUserProfiles = await Promise.all(
+                reviews.map(async (review) => {
+                    const { name, profilePic } = await getUserProfile(review.userId);
+                    return { ...review, userName: name, profilePic };
+                })
+            )
+
+            setRecentReviews(reviewsWithUserProfiles);
         };
 
         fetchRecentReviews();
@@ -144,8 +154,9 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
                             {recentReviews.length > 0 ? (
                                 recentReviews.map((review, index) => (
                                     <div key={index} className="review-post">
-                                        <strong>{review.userId}</strong> reviewed <em>{review.gameName}</em>:
-                                        <p>{review.comment}</p>
+                                        <img src={review.profilePic} alt={`${review.userName}'s profile`} className="profile-pic" />
+                                        <strong>{review.userName}</strong> reviewed <em>{review.gameName}</em>:
+                                        <p>{review.notes}</p>
                                         <Rating
                                             name={`rating-${index}`}
                                             value={review.rating}
@@ -159,6 +170,7 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
                             )}
                         </div>
                     </div>
+
                     <div className='color-divider'></div>
                 </>
             )}

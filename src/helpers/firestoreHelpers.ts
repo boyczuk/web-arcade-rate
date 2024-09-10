@@ -1,5 +1,6 @@
 import { db } from '../firebase';
 import { collection, getDocs, orderBy, limit, query, doc, getDoc } from 'firebase/firestore';
+import defaultPic from '../assets/notFound.png'
 
 interface Game {
     id: string;
@@ -15,10 +16,38 @@ interface Review {
     id: string;
     gameName: string;
     rating: number;
-    comment: string;
+    notes: string;
     userId: string;
+    userName?: string;
+    profilePic?: string;
     createdAt: any;
 }
+
+export const getUserProfile = async (userId: string): Promise<{ name: string, profilePic: string }> => {
+    try { 
+        const userRef = doc(db, 'users', userId);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            return {
+                name: userData.name || 'Unknown User',
+                profilePic: userData.profilePic || defaultPic
+            };
+        } else {
+            return {
+                name: 'Unknown User',
+                profilePic: 'default-profile-pic.jpg'
+            };
+        }
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+        return {
+            name: 'Uknown user',
+            profilePic: 'default-profile-pic.jpg'
+        };
+    }
+};
 
 export const getRecentReviews = async (): Promise<Review[]> => {
     try {
@@ -34,7 +63,7 @@ export const getRecentReviews = async (): Promise<Review[]> => {
                 id: doc.id,
                 gameName: data.gameName,
                 rating: data.rating,
-                comment: data.comment,
+                notes: data.notes,
                 userId: data.userId,  // Assuming you store the userId with the review
                 createdAt: data.createdAt
             });
