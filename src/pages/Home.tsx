@@ -14,6 +14,16 @@ interface Game {
     };
 }
 
+interface Review {
+    id: string;
+    gameName: string;
+    rating: number;
+    cover?: {
+        url?: string;
+    };
+    comment: string;
+}
+
 interface HomeProps {
     currentUser: any;
 }
@@ -38,6 +48,7 @@ const fetchGameCover = async (gameId: number): Promise<string | undefined> => {
 const Home: React.FC<HomeProps> = ({ currentUser }) => {
     const [popularGames, setPopularGames] = useState<Game[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [recentReviews2, setRecentReviews] = useState<Review[]>([]);
 
     useEffect(() => {
         const fetchGames = async () => {
@@ -58,6 +69,12 @@ const Home: React.FC<HomeProps> = ({ currentUser }) => {
 
         fetchGames();
     }, []);
+
+    useEffect(() => {
+        const getRecentReviews = async () => {
+
+        }
+    })
 
     const recentReviews = [
         { user: 'User1', game: 'Cyberpunk 2077', review: 'Definitely my all-time #1 game' },

@@ -125,6 +125,8 @@ app.post('/add-game', async (req, res) => {
 
         const gameExists = gamesArray.some(game => game.gameId === gameId);
 
+
+        
         if (!gameExists) {
             gamesArray.push(newGame);
             await userRef.update({ games: gamesArray });
@@ -133,6 +135,14 @@ app.post('/add-game', async (req, res) => {
             const gameRef = db.collection('games').doc(String(gameId));
             const gameDoc = await gameRef.get();
 
+
+            console.log('Adding review to Firestore:', { userId, gameId, rating, notes });
+
+            await admin.firestore().collection('reviews').add({
+                userId, gameId, gameName, rating, notes, createdAt: new Date(),
+            });
+
+            // if game has already been stored in games collection
             if (gameDoc.exists) {
                 const gameData = gameDoc.data();
                 const newReviewsCount = gameData.reviewsCount + 1;
@@ -145,6 +155,8 @@ app.post('/add-game', async (req, res) => {
                     totalRatingSum: newTotalRatingSum,
                     averageRating: newAverageRating,
                 });
+
+               
 
                 console.log(`Incremented reviewsCount and updated rating for game: ${gameName}`);
                 res.status(200).json({ message: "Game added to user's profile and review count incremented." });
