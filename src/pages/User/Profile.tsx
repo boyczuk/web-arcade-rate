@@ -104,8 +104,8 @@ const Profile = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    userId: user.uid,  
-                    gameId             
+                    userId: user.uid,
+                    gameId
                 }),
             });
 
@@ -154,17 +154,20 @@ const Profile = () => {
 
     return (
         <div className="profile-container">
-            <div className="image-container">
-                {userData.photoURL ? (
-                    <img src={userData.photoURL} alt="Profile" style={{ width: '100px', height: '100px' }} />
-                ) : (
-                    <div className="image-placeholder">Image Placeholder</div>
-                )}
+            <div className="profile-info">
+                <div className="image-container">
+                    {userData.photoURL ? (
+                        <img src={userData.photoURL} alt="Profile" />
+                    ) : (
+                        <div className="image-placeholder">Image Placeholder</div>
+                    )}
+                </div>
+                <div className="profile-details">
+                    <h1>{userData.name}</h1>
+                    <p>@{userData.username}</p>
+                </div>
             </div>
             <div className="content">
-                <h1>User Profile</h1>
-                <p>Username: {userData.username}</p>
-                <p>Name: {userData.name}</p>
                 <div className='user-games'>
                     <h2>Games</h2>
                     {games.length > 0 ? (
