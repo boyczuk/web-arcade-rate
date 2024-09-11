@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './Profile.css';
+import './Settings.css';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../../firebase';
-import Modal from '../../components/Utilities/Modal';
-import './Settings.css'
 
 interface UserData {
     username: string;
@@ -12,14 +10,13 @@ interface UserData {
     photoURL?: string;  
 }
 
-
 async function fetchUserData(): Promise<UserData | undefined> {
     const user = auth.currentUser;
     if (user) {
         const userDocRef = doc(db, 'users', user.uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
-            return userDoc.data() as UserData; // Type assertion
+            return userDoc.data() as UserData;
         } else {
             console.log("No such document!");
         }
@@ -28,65 +25,127 @@ async function fetchUserData(): Promise<UserData | undefined> {
     }
 }
 
-const Profile = () => {
+const Settings = () => {
     const [userData, setUserData] = useState<UserData | undefined>();
-    const [isModalOpen, setModalOpen] = useState(false);
+    const [isEditing, setIsEditing] = useState<{ [key: string]: boolean }>({
+        username: false,
+        name: false,
+        email: false,
+    });
+    const [editedData, setEditedData] = useState<UserData | undefined>();
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await fetchUserData();
             if (data) {
                 setUserData(data);
+                setEditedData(data);
             }
         };
 
         fetchData();
     }, []);
 
-    const handleUpdateUser = async (data: { username?: string, name?: string, email?: string, photoURL?: string }) => {
-        if (!auth.currentUser) {
-            console.error('No user logged in');
+    const handleEditClick = (field: string) => {
+        setIsEditing(prevState => ({ ...prevState, [field]: true }));
+    };
+
+    const handleSaveClick = async (field: string) => {
+        if (!auth.currentUser || !editedData) {
             return;
         }
+
         const userRef = doc(db, 'users', auth.currentUser.uid);
+
         try {
-            await updateDoc(userRef, { ...data });
-            setUserData(prev => ({ ...prev!, ...data }));
-            alert('User updated successfully!');
+            await updateDoc(userRef, { [field]: editedData[field as keyof UserData] });
+            setUserData(prev => ({ ...prev!, [field]: editedData[field as keyof UserData] }));
+            setIsEditing(prevState => ({ ...prevState, [field]: false }));
         } catch (error) {
             console.error('Error updating user:', error);
-            alert('Failed to update user.');
         }
     };
 
-    if (!userData) {
+    const handleInputChange = (field: string, value: string) => {
+        setEditedData(prev => ({ ...prev!, [field]: value }));
+    };
+
+    if (!userData || !editedData) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className="profile-container">
+        <div className="settings-profile-container">
             <h1>Settings</h1>
-            <div className="image-container">
-                {userData.photoURL ? (
-                    <img src={userData.photoURL} alt="Profile" style={{ width: '100px', height: '100px' }} />
-                ) : (
-                    <div className="image-placeholder">Image Placeholder</div>
-                )}
+            <div className="settings-profile-info">
+                <div className="settings-image-container">
+                    {userData.photoURL ? (
+                        <img src={userData.photoURL} alt="Profile" />
+                    ) : (
+                        <div className="settings-image-placeholder">Image Placeholder</div>
+                    )}
+                </div>
+                <div className="settings-profile-details">
+                    <div className="settings-profile-field">
+                        <strong>Username:</strong> 
+                        {isEditing.username ? (
+                            <>
+                                <input
+                                    type="text"
+                                    value={editedData.username}
+                                    onChange={(e) => handleInputChange('username', e.target.value)}
+                                />
+                                <button onClick={() => handleSaveClick('username')}>Save</button>
+                            </>
+                        ) : (
+                            <>
+                                <span>{userData.username}</span>
+                                <button onClick={() => handleEditClick('username')}>Edit</button>
+                            </>
+                        )}
+                    </div>
+
+                    <div className="settings-profile-field">
+                        <strong>Name:</strong> 
+                        {isEditing.name ? (
+                            <>
+                                <input
+                                    type="text"
+                                    value={editedData.name}
+                                    onChange={(e) => handleInputChange('name', e.target.value)}
+                                />
+                                <button onClick={() => handleSaveClick('name')}>Save</button>
+                            </>
+                        ) : (
+                            <>
+                                <span>{userData.name}</span>
+                                <button onClick={() => handleEditClick('name')}>Edit</button>
+                            </>
+                        )}
+                    </div>
+
+                    <div className="settings-profile-field">
+                        <strong>Email:</strong> 
+                        {isEditing.email ? (
+                            <>
+                                <input
+                                    type="text"
+                                    value={editedData.email}
+                                    onChange={(e) => handleInputChange('email', e.target.value)}
+                                />
+                                <button onClick={() => handleSaveClick('email')}>Save</button>
+                            </>
+                        ) : (
+                            <>
+                                <span>{userData.email}</span>
+                                <button onClick={() => handleEditClick('email')}>Edit</button>
+                            </>
+                        )}
+                    </div>
+                </div>
             </div>
-            <div className="content">
-                <p>Username: {userData.username}</p>
-                <p>Name: {userData.name}</p>
-                <p>Email: {userData.email}</p>
-                <button onClick={() => setModalOpen(true)}>Modify</button>
-            </div>
-            <Modal
-                isOpen={isModalOpen}
-                onClose={() => setModalOpen(false)}
-                onSubmit={handleUpdateUser}
-                initialData={userData}
-            />
         </div>
     );
 };
 
-export default Profile;
+export default Settings;
