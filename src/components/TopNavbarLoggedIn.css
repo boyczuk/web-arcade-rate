@@ -1,3 +1,4 @@
+/* General navbar styling - Unchanged */
 .Navbar {
     background-color: #211F2A !important;
     box-shadow: none !important;
@@ -75,7 +76,6 @@
     margin: 0; 
 }
 
-
 .ProfileLink {
     position: relative;
     display: inline-block;
@@ -108,10 +108,6 @@
     list-style-type: none; 
 }
 
-.ProfileLink {
-    position: relative;
-}
-
 .DropdownMenu .MenuLink {
     display: block;
     padding: 10px 15px;
@@ -128,31 +124,21 @@
     color: white;
 }
 
-.DropdownMenu .DropdownItem {
-    display: block; 
-    padding: 10px;
-    color: white; 
-    text-decoration: none; 
-    width: 100%; 
-    border-bottom: 1px solid #ccc; 
-}
-
-.DropdownMenu .DropdownItem:last-child {
-    border-bottom: none; 
-}
-
-.DropdownMenu .DropdownItem:hover {
-    background-color: #333; 
-    color: white; 
+.search-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
 }
 
 .search-input {
-    padding: 8px 12px;
+    padding: 10px 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 16px; /* Larger text for better visibility */
     transition: border-color 0.2s ease;
     outline: none;
+    width: 350px; /* Wider search bar for desktop */
 }
 
 .search-input:focus {
@@ -162,7 +148,7 @@
 
 .search-button {
     margin-left: 10px;
-    padding: 8px 16px;
+    padding: 10px 16px;
     border: none;
     border-radius: 4px;
     background-color: #007bff;
@@ -179,4 +165,53 @@
 
 .search-button:focus {
     outline: none;
+}
+
+/* Mobile-specific styles */
+@media screen and (max-width: 768px) {
+    .MenuContainer {
+        display: none;
+    }
+
+    .HamburgerIcon {
+        display: block;
+        font-size: 40px;
+        color: white;
+        cursor: pointer;
+    }
+
+    .MobileMenu {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #211F2A;
+        padding: 20px;
+        width: 100%;
+        z-index: 100;
+    }
+
+    .MobileMenu .MenuLink {
+        margin: 10px 0;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .search-input {
+        width: 90%;
+        margin: 4%;
+    }
+
+    /* Hide the search button on mobile */
+    .search-button {
+        display: none;
+    }
+}
+
+/* Hide hamburger on larger screens */
+@media screen and (min-width: 768px) {
+    .HamburgerIcon {
+        display: none;
+    }
 }
