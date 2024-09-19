@@ -9,6 +9,7 @@ import './TopNavbarLoggedOut.css';
 function TopNavbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement | null>(null);
+    const hamburgerRef = useRef<HTMLDivElement | null>(null); 
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -16,7 +17,13 @@ function TopNavbar() {
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (menuOpen && menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            if (
+                menuOpen &&
+                menuRef.current &&
+                !menuRef.current.contains(event.target as Node) &&
+                hamburgerRef.current &&
+                !hamburgerRef.current.contains(event.target as Node)
+            ) {
                 setMenuOpen(false);
             }
         };
@@ -54,12 +61,11 @@ function TopNavbar() {
                         </NavLink>
                     </div>
 
-                    <div className="HamburgerIcon" onClick={toggleMenu}>
+                    <div className="HamburgerIcon" onClick={toggleMenu} ref={hamburgerRef}>
                         &#9776;
                     </div>
                 </Toolbar>
 
-                {/* Mobile menu */}
                 {menuOpen && (
                     <div className="MobileMenu" ref={menuRef}>
                         <NavLink to='/' className='MenuLink' onClick={toggleMenu}>
