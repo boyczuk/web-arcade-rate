@@ -1,7 +1,6 @@
 .Navbar {
     background-color: #211F2A !important;
     box-shadow: none !important;
-  
 }
 
 .NavbarContainer {
@@ -19,7 +18,7 @@
 .LogoContainer {
     display: flex;
     align-items: center;
-    margin-right: 5%; 
+    margin-right: 5%;
     text-decoration: none !important;
 }
 
@@ -27,15 +26,18 @@
     text-decoration: none !important;
     color: white !important;
     font-weight: bold !important;
-    font-size: 24px; 
+    font-size: 24px;
 }
 
 .logo img {
-    width: 80px; 
+    width: 80px;
     height: auto;
 }
 
-.logo a, .logo a:visited, .logo a:hover, .logo a:active {
+.logo a,
+.logo a:visited,
+.logo a:hover,
+.logo a:active {
     text-decoration: none;
     color: white;
     font-weight: bold;
@@ -49,8 +51,9 @@
 .search-container {
     margin-top: 1%;
 }
+
 .MenuLink {
-    margin-left: 20px; 
+    margin-left: 20px;
     margin-right: 20px;
     text-decoration: none;
     color: inherit;
@@ -62,5 +65,43 @@
 }
 
 .MenuLink:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .MenuContainer {
+        display: none;
+    }
+    .HamburgerIcon {
+        display: block;
+        font-size: 60px;
+        color: white;
+        cursor: pointer;
+        margin-right: 5%;
+        margin-bottom: 2%;
+    }
+
+    .MobileMenu {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #211F2A;
+        padding: 20px;
+        width: 100%;
+    }
+
+    .MobileMenu .MenuLink {
+        margin: 10px 0;
+        font-size: 18px;
+        text-align: center;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .HamburgerIcon {
+        display: none;
+    }
+
 }
